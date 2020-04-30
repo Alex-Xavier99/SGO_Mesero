@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityTipoOrden">
+
+    <TextView
+        android:id="@+id/txtview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/txt_title3"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtview_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="@string/txt_subtitle"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
+
+    <ImageButton
+        android:id="@+id/img_aperitivo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="102dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_aperitivos"
+        app:srcCompat="@drawable/dishuno" />
+
+    <ImageButton
+        android:id="@+id/img_sopa"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="102dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_sopas"
+        app:srcCompat="@drawable/dishuno" />
+
+    <ImageButton
+        android:id="@+id/img_fuerte"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="102dp"
+        android:layout_marginEnd="19dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_plfuertes"
+        app:srcCompat="@drawable/dishuno" />
+
+    <TextView
+        android:id="@+id/txtview_apert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="205dp"
+        android:gravity="center"
+        android:text="@string/txt_aperitivos"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtview_sopa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="205dp"
+        android:gravity="center"
+        android:text="@string/txt_sopas"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtview_fuertes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="205dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="@string/txt_plfuertes"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/img_ensalada"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="245dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_ensalada"
+        app:srcCompat="@drawable/dishuno" />
+
+    <ImageButton
+        android:id="@+id/img_marisco"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="245dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_mariscos"
+        app:srcCompat="@drawable/dishuno" />
+
+    <ImageButton
+        android:id="@+id/img_jugo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="245dp"
+        android:layout_marginEnd="19dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_jugos"
+        app:srcCompat="@drawable/dishuno" />
+
+    <TextView
+        android:id="@+id/txtview_ensalada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="345dp"
+        android:gravity="center"
+        android:text="@string/txt_ensalada"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtview_marisco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="345dp"
+        android:gravity="center"
+        android:text="@string/txt_mariscos"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtview_jugo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="345dp"
+        android:layout_marginEnd="45dp"
+        android:gravity="center"
+        android:text="@string/txt_jugos"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/img_postre"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="385dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_postres"
+        app:srcCompat="@drawable/dishuno" />
+
+    <ImageButton
+        android:id="@+id/img_promo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="385dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/txt_promociones"
+        app:srcCompat="@drawable/dishuno" />
+
+    <TextView
+        android:id="@+id/txtview_postre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="488dp"
+        android:gravity="center"
+        android:text="@string/txt_postres"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtview_promo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="488dp"
+        android:gravity="center"
+        android:text="@string/txt_promociones"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
