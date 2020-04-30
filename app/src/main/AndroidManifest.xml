@@ -11,12 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ActivityLogin"></activity>
-        <activity android:name=".ActivityTipoOrden" />
-        <activity android:name=".ActivityIngresarDatosFact" />
-        <activity android:name=".ActivitySeleccionMesa" />
-        <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
