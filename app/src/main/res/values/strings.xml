@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Restaurante X</string>
+    <string name="txt_title">#Mesa</string>
+    <string name="btn_Aceptar">Aceptar</string>
+    <string name="btn_Cancelar">Cancelar</string>
 
     <string name="txt_title2">Ingresar Datos Factura</string>
     <string name="txt_subtitle">Mesa Nro. 1</string>
