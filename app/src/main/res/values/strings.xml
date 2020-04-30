@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Restaurante X</string>
+    <string name="app_name">SGO Mesero</string>
+
+    #Activity Login
+    <string name="txt_Usuario">Usuario</string>
+    <string name="txt_Contraseña">Contraseña</string>
+    <string name="btn_Ingresar">Ingresar</string>
+    #end Activity Login
 
     <string name="txt_title2">Ingresar Datos Factura</string>
     <string name="txt_subtitle">Mesa Nro. 1</string>
@@ -20,4 +26,5 @@
     <string name="txt_jugos">Jugos</string>
     <string name="txt_postres">Postres</string>
     <string name="txt_promociones">Promociones</string>
+    <string name="textview">TextView</string>
 </resources>
