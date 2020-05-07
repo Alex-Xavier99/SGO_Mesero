@@ -257,4 +257,37 @@
 
     </TableRow>
 
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow5">
+
+        <Button
+            android:id="@+id/btn_verificar"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="VerificarOrden"
+            android:text="@string/txt_title4" />
+
+        <Button
+            android:id="@+id/btn_fact"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Facturar"
+            android:text="@string/btn_fact" />
+
+        <Button
+            android:id="@+id/btn_regresar"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Regresar"
+            android:text="@string/txt_title" />
+    </TableRow>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

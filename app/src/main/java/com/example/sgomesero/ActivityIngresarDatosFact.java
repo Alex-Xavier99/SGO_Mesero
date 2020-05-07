@@ -29,20 +29,10 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
         subti = getIntent().getStringExtra("m1");
         subtitle.setText(subti);
     }
-
-    //Metodo para ingresar las ordenes
-    public void IngresarOrden(View view){
-        Intent orden = new Intent(this,ActivityTipoOrden.class);
-        orden.putExtra("m1",subti);//Se envia el nombre de la mesa a la siguiente activity
-        startActivity(orden);
+    //Regresea a la Activity Seleccion Mesa
+    public void Regresar(View view){
+        Intent regmesa = new Intent(this, ActivitySeleccionMesa.class);
+        startActivity(regmesa);
         finish();
     }
-    //Metodo en el caso de aplastar en el boton de regreso
-    @Override
-    public  void onBackPressed(){
-        Intent principal = new Intent(this,MainActivity.class);
-        startActivity(principal);
-        finish();
-    }
-
 }
