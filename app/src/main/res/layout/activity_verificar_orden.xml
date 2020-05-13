@@ -40,18 +40,18 @@
 
     <ListView
         android:id="@+id/list_ordenes"
-        android:layout_width="350dp"
-        android:layout_height="360dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="341dp"
+        android:layout_height="331dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_Datosfact" />
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_ordenes">
@@ -61,6 +61,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="AgregarOrden"
             android:text="@string/btn_confirmar" />
 
         <Button
@@ -68,6 +69,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="Eliminar"
             android:text="@string/btn_eliminar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -77,8 +79,21 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Regresar"
-            android:text="@string/txt_title3" />
+            android:onClick="Editar"
+            android:text="@string/btn_editar" />
     </TableRow>
+
+    <Button
+        android:id="@+id/btn_Datosfact"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:onClick="DatosFactura"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle"
+        tools:text="@string/btn_DatosFact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

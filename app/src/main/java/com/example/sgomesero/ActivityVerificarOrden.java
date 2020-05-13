@@ -32,18 +32,21 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         listorden.setAdapter(lista);
 
     }
-    public void Confirmar(View view){
-
+    public void AgregarOrden(View view){
+        Intent tipoOrden = new Intent(this, ActivityTipoOrden.class);
+        startActivity(tipoOrden);
+        finish();
     }
     public void Eliminar(View view){
-        if(listorden.isSelected()){
 
-        }
     }
-    public void Regresar(View view){
-        Intent tipoorden = new Intent(this, ActivityTipoOrden.class);
-        tipoorden.putExtra("m1",subti);
-        startActivity(tipoorden);
+    public void Editar(View view){
+
+    }
+    public void DatosFactura(View view){
+        Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
+        factura.putExtra("m1",subti);
+        startActivity(factura);
         finish();
     }
 }

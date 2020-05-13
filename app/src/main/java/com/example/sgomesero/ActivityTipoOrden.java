@@ -11,14 +11,12 @@ import android.widget.TextView;
 public class ActivityTipoOrden extends AppCompatActivity {
     private TextView subtitle;
     private ImageButton imgaperitivo,imgsopa,imgfuerte,imgensalada,imgmariscos,imgjugos,imgpostre,imgpromo;
-    private String subti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo_orden);
 
-        subtitle = (TextView)findViewById(R.id.txtview_subtitle);
         imgaperitivo = (ImageButton)findViewById(R.id.img_aperitivo);
         imgsopa = (ImageButton)findViewById(R.id.img_sopa);
         imgfuerte = (ImageButton)findViewById(R.id.img_fuerte);
@@ -28,21 +26,36 @@ public class ActivityTipoOrden extends AppCompatActivity {
         imgpostre = (ImageButton)findViewById(R.id.img_postre);
         imgpromo = (ImageButton)findViewById(R.id.img_promo);
 
-        subti = getIntent().getStringExtra("m1");
-        subtitle.setText(subti);
     }
 
     //Siguiente activity Verficar Orden
-    public void VerificarOrden(View view){
-        Intent verificar = new Intent(this, ActivityVerificarOrden.class);
-        verificar.putExtra("m1",subti);
-        startActivity(verificar);
-        finish();
+    public void Aperitivo(View view){
+        SeleccionarOrden();
     }
-    public void Facturar(View view){
-        Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
-        factura.putExtra("m1",subti);
-        startActivity(factura);
+    public void Sopas(View view){
+        SeleccionarOrden();
+    }
+    public void PlatosFuertes(View view){
+        SeleccionarOrden();
+    }
+    public void Ensaladas(View view){
+        SeleccionarOrden();
+    }
+    public void Mariscos(View view){
+        SeleccionarOrden();
+    }
+    public void Jugos(View view){
+        SeleccionarOrden();
+    }
+    public void Postres(View view){
+        SeleccionarOrden();
+    }
+    public void Promociones(View view){
+        SeleccionarOrden();
+    }
+    public void SeleccionarOrden(){
+        Intent selectorden = new Intent(this, ActivitySelecionOrden.class);
+        startActivity(selectorden);
         finish();
     }
     public void Regresar(View view){

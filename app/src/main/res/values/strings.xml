@@ -35,8 +35,10 @@
     <string name="btn_fact">Facturar</string>
 
     <string name="txt_title4">Verificar Orden</string>
-    <string name="btn_confirmar">Confirmar</string>
+    <string name="btn_confirmar">Agregar</string>
     <string name="btn_eliminar">Eliminar</string>
+    <string name="btn_editar">Editar</string>
+    <string name="btn_DatosFact">Ingresar Datos Facturación</string>
 
     <string name="txt_title5">Seleccionar Orden</string>
 

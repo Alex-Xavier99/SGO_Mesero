@@ -55,9 +55,9 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         }
     }
     public void PasarActivity(String mesa){
-        Intent datosfact = new Intent(this,ActivityTipoOrden.class);
-        datosfact.putExtra("m1",mesa);
-        startActivity(datosfact);
+        Intent verificarorden = new Intent(this,ActivityVerificarOrden.class);
+        verificarorden.putExtra("m1",mesa);
+        startActivity(verificarorden);
         finish();
     }
 }
