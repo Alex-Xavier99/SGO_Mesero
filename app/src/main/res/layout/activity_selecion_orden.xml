@@ -4,57 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivitySeleccionMesa">
+    tools:context=".ActivitySelecionOrden">
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="236dp"
+        android:id="@+id/txtview_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentEnd="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/txt_title"
+        android:text="@string/txt_title5"
         android:textColor="@android:color/black"
-        android:textSize="36sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spin_selectmesa"
+    <ListView
+        android:id="@+id/list_ordenes"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_height="360dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtview_title" />
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spin_selectmesa">
+        app:layout_constraintTop_toBottomOf="@+id/list_ordenes">
 
         <Button
-            android:id="@+id/btn_aceptar"
+            android:id="@+id/btn_confirmar"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:onClick="Aceptar"
-            android:text="@string/btn_Aceptar"
-            android:textSize="20sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Agregar"
+            android:text="@string/btn_confirmar" />
 
+        <Button
+            android:id="@+id/btn_eliminar"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Regresar"
+            android:text="@string/txt_title3" />
     </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

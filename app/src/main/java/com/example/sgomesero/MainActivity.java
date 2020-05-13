@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
                     IrSguienteActivity();
             }
         }, 1000);
+
     }
 
     //Función que llama al siguiente activity

@@ -11,7 +11,7 @@
     <string name="txt_title">#Mesa</string>
     <string name="btn_Aceptar">Aceptar</string>
     <string name="btn_Cancelar">Cancelar</string>
-  
+
     <string name="txt_title2">Ingresar Datos Factura</string>
     <string name="txt_subtitle">Mesa Nro. 1</string>
     <string name="txt_nombres">Razón Social/Nombres y Apellidos</string>
@@ -32,4 +32,14 @@
     <string name="txt_postres">Postres</string>
     <string name="txt_promociones">Promociones</string>
     <string name="textview">TextView</string>
+    <string name="btn_fact">Facturar</string>
+
+    <string name="txt_title4">Verificar Orden</string>
+    <string name="btn_confirmar">Agregar</string>
+    <string name="btn_eliminar">Eliminar</string>
+    <string name="btn_editar">Editar</string>
+    <string name="btn_DatosFact">Ingresar Datos Facturación</string>
+
+    <string name="txt_title5">Seleccionar Orden</string>
+
 </resources>

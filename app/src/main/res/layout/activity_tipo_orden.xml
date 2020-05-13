@@ -23,29 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtview_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/txt_subtitle"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_title" />
-
     <TableRow
         android:id="@+id/tableRow4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle">
+        app:layout_constraintTop_toBottomOf="@+id/txtview_title">
 
         <ImageButton
             android:id="@+id/img_aperitivo"
@@ -54,6 +39,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_aperitivos"
+            android:onClick="Aperitivo"
             app:srcCompat="@drawable/dishuno" />
 
         <ImageButton
@@ -63,6 +49,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_sopas"
+            android:onClick="Sopas"
             app:srcCompat="@drawable/dishuno" />
 
         <ImageButton
@@ -72,6 +59,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_plfuertes"
+            android:onClick="PlatosFuertes"
             app:srcCompat="@drawable/dishuno" />
 
     </TableRow>
@@ -134,6 +122,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_ensalada"
+            android:onClick="Ensaladas"
             app:srcCompat="@drawable/dishuno" />
 
         <ImageButton
@@ -143,6 +132,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_mariscos"
+            android:onClick="Mariscos"
             app:srcCompat="@drawable/dishuno" />
 
         <ImageButton
@@ -152,6 +142,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_jugos"
+            android:onClick="Jugos"
             app:srcCompat="@drawable/dishuno" />
 
     </TableRow>
@@ -213,6 +204,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_postres"
+            android:onClick="Postres"
             app:srcCompat="@drawable/dishuno" />
 
         <ImageButton
@@ -222,6 +214,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_promociones"
+            android:onClick="Promociones"
             app:srcCompat="@drawable/dishuno" />
 
     </TableRow>
