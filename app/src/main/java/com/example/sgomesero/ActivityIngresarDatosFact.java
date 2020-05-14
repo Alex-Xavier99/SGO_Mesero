@@ -67,10 +67,10 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                String estado = response.getString("estado");
-                                String error = response.getString("error");
-                                Toast.makeText(ActivityIngresarDatosFact.this, estado, Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(GuardarProductoActivity.this, "Error: "+error, Toast.LENGTH_SHORT).show();
+
+                                String mensaje = response.getString("message");
+                                Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
