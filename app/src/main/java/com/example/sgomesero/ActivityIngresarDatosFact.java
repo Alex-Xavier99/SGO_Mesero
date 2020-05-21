@@ -59,7 +59,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
             datos.put("cli_telf",telf);
             JSONObject jsonData = new JSONObject(datos);
 
-            AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/cliente")
+            AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/clientes")
                     .addJSONObjectBody(jsonData)
                     .setPriority(Priority.MEDIUM)
                     .build()
