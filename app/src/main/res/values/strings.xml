@@ -39,6 +39,12 @@
     <string name="btn_eliminar">Eliminar</string>
     <string name="btn_editar">Editar</string>
     <string name="btn_DatosFact">Ingresar Datos Facturación</string>
+    <string name="txt_cod">Cod</string>
+    <string name="txt_descrip">Descripción</string>
+    <string name="txt_cant">Nro.</string>
+    <string name="txt_Valorunit">PVP</string>
+    <string name="txt_Total">Total</string>
+    <string name="txt_Res">Resultado</string>
 
     <string name="txt_title5">Seleccionar Orden</string>
 

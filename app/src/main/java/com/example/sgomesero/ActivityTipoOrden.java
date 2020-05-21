@@ -58,9 +58,10 @@ public class ActivityTipoOrden extends AppCompatActivity {
         startActivity(selectorden);
         finish();
     }
-    public void Regresar(View view){
-        Intent regmesa = new Intent(this, ActivitySeleccionMesa.class);
-        startActivity(regmesa);
+    @Override
+    public  void onBackPressed(){
+        Intent verificar= new Intent(this,ActivityVerificarOrden.class);
+        startActivity(verificar);
         finish();
     }
 }

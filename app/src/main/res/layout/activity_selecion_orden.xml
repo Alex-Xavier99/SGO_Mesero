@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="Regresar"
-            android:text="@string/txt_title3" />
+            android:text="@string/btn_Cancelar" />
     </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

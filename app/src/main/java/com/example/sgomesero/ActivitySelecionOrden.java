@@ -49,10 +49,20 @@ public class ActivitySelecionOrden extends AppCompatActivity {
             items+="-"+item+"\n";
         }
         Toast.makeText(this, "Seleccionaste \n"+items, Toast.LENGTH_SHORT).show();
+        PasarActivity();
     }
     public void Regresar(View view){
-        Intent tipoorden = new Intent(this, ActivityTipoOrden.class);
-        startActivity(tipoorden);
+        PasarActivity();
+    }
+    @Override
+    public  void onBackPressed(){
+        Intent tporden= new Intent(this,ActivityTipoOrden.class);
+        startActivity(tporden);
+        finish();
+    }
+    public void PasarActivity(){
+        Intent verificar= new Intent(this,ActivityVerificarOrden.class);
+        startActivity(verificar);
         finish();
     }
 }

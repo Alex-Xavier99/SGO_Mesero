@@ -99,4 +99,10 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
         startActivity(verificarorden);
         finish();
     }
+    @Override
+    public  void onBackPressed(){
+        Intent verificar = new Intent(this,ActivityVerificarOrden.class);
+        startActivity(verificar);
+        finish();
+    }
 }

@@ -60,4 +60,10 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         startActivity(verificarorden);
         finish();
     }
+    @Override
+    public  void onBackPressed(){
+        Intent login = new Intent(this,ActivityLogin.class);
+        startActivity(login);
+        finish();
+    }
 }
