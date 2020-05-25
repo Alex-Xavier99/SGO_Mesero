@@ -63,8 +63,12 @@
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/txt_telefono"
-            android:inputType="textPersonName"
-            android:textColorHint="@android:color/black" />
+            android:inputType="number"
+            android:textColorHint="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/txt_correo"
