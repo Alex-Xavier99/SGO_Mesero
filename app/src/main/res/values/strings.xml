@@ -2,6 +2,8 @@
 
     <string name="app_name">SGO Mesero</string>
 
+    <string name="loading">Cargando...</string>
+
     #Activity Login
     <string name="txt_Usuario">Usuario</string>
     <string name="txt_Contraseña">Contraseña</string>
