@@ -147,30 +147,28 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btn_confirmar"
+            android:id="@+id/btn_agregar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="AgregarOrden"
-            android:text="@string/btn_confirmar" />
+            android:text="@string/btn_agregar" />
 
         <Button
-            android:id="@+id/btn_eliminar"
+            android:id="@+id/btn_confirmar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Eliminar"
-            android:text="@string/btn_eliminar"
+            android:text="@string/btn_confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btn_regresar"
+            android:id="@+id/btn_finalizar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Editar"
-            android:text="@string/btn_editar" />
+            android:text="@string/btn_finali" />
     </TableRow>
 
     <Button

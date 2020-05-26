@@ -93,10 +93,13 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                 !telefono.getText().toString().trim().isEmpty() &&
                 !correo.getText().toString().trim().isEmpty();
     }
+    public void Buscar(View view){
+
+    }
 
     public void DatosFactura(View view){
-        Intent verificarorden = new Intent(this, ActivityVerificarOrden.class);
-        startActivity(verificarorden);
+        /*Intent verificarorden = new Intent(this, ActivityVerificarOrden.class);
+        startActivity(verificarorden);*/
         finish();
     }
     @Override

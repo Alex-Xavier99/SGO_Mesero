@@ -20,7 +20,8 @@
     <string name="txt_telefono">Teléfono</string>
     <string name="txt_email">E-mail</string>
     <string name="txt_ingorden">Ingresar Orden</string>
-    <string name="txt_facturacion">Realizar factura</string>
+    <string name="btn_buscar">Buscar Cliente</string>
+    <string name="btn_facturacion">Realizar factura</string>
 
     <string name="txt_title3">Tipo de Orden</string>
     <string name="txt_aperitivos">Aperitivos</string>
@@ -35,9 +36,9 @@
     <string name="btn_fact">Facturar</string>
 
     <string name="txt_title4">Verificar Orden</string>
-    <string name="btn_confirmar">Agregar</string>
-    <string name="btn_eliminar">Eliminar</string>
-    <string name="btn_editar">Editar</string>
+    <string name="btn_agregar">Agregar</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_finali">Finalizar</string>
     <string name="btn_DatosFact">Ingresar Datos Facturación</string>
     <string name="txt_cod">Cod</string>
     <string name="txt_descrip">Descripción</string>
@@ -47,5 +48,10 @@
     <string name="txt_Res">Resultado</string>
 
     <string name="txt_title5">Seleccionar Orden</string>
+
+    <string name="txt_plato">plato</string>
+    <string name="btn_mas">+</string>
+    <string name="txt_num">Num</string>
+    <string name="btn_menos">-</string>
 
 </resources>

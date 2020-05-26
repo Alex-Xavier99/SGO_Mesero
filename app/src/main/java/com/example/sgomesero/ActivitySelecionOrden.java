@@ -37,8 +37,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
         listorden = (ListView)findViewById(R.id.list_ordenes);
         lista = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
-
-        listorden.setAdapter(lista);
+        AdapterContador apt = new AdapterContador(this,lista);
+        listorden.setAdapter(apt);
 
         AndroidNetworking.get("https://safe-bastion-34410.herokuapp.com/api/platos")
                 .setPriority(Priority.MEDIUM)
@@ -149,8 +149,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
     }
     @Override
     public  void onBackPressed(){
-        Intent tporden= new Intent(this,ActivityTipoOrden.class);
-        startActivity(tporden);
+        /*Intent tporden= new Intent(this,ActivityTipoOrden.class);
+        startActivity(tporden);*/
         finish();
     }
     public void PasarActivity(){

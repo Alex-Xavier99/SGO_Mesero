@@ -50,12 +50,6 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         startActivity(tipoOrden);
         finish();
     }
-    public void Eliminar(View view){
-
-    }
-    public void Editar(View view){
-
-    }
     public void DatosFactura(View view){
         Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
         factura.putExtra("m1",subti);
