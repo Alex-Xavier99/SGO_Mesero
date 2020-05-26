@@ -94,18 +94,20 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                 !correo.getText().toString().trim().isEmpty();
     }
     public void Buscar(View view){
+        if( !cedula.getText().toString().trim().isEmpty()){
 
+        }
     }
 
     public void DatosFactura(View view){
-        /*Intent verificarorden = new Intent(this, ActivityVerificarOrden.class);
-        startActivity(verificarorden);*/
+        Intent verificarorden = new Intent(this, ActivityVerificarOrden.class);
+        startActivity(verificarorden);
         finish();
     }
     @Override
     public  void onBackPressed(){
-        Intent verificar = new Intent(this,ActivityVerificarOrden.class);
-        startActivity(verificar);
+        /*Intent verificar = new Intent(this,ActivityVerificarOrden.class);
+        startActivity(verificar);*/
         finish();
     }
 }
