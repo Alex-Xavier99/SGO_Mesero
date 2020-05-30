@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ActivityVerificarOrden extends AppCompatActivity {
 
@@ -39,11 +40,16 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
         listorden = (ListView)findViewById(R.id.listview_ordenes);
         restotal = (TextView)findViewById(R.id.txtview_totalres);
+
+        Actualizar();
+        EliminarItemArrayMenu();
+    }
+
+    public void Actualizar(){
         AdapterSelect apt = new AdapterSelect(this,menu);
         listorden.setAdapter(apt);
         res = apt.Operacion();
         restotal.setText(String.valueOf(res));
-
     }
     public void AgregarOrden(View view){
         Intent tipoOrden = new Intent(this, ActivityTipoOrden.class);
@@ -61,5 +67,41 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         Intent mesa = new Intent(this,ActivitySeleccionMesa.class);
         startActivity(mesa);
         finish();
+    }
+    private void EliminarItemArrayMenu() {
+        listorden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String probar;
+                String msm = "Se elimina " + String.valueOf(menu[position][1]);
+                Toast.makeText(getApplicationContext(), msm, Toast.LENGTH_SHORT).show();
+                if (position < menu.length - 1) {
+                    do {
+
+                        menu[position][0] = menu[position + 1][0];
+                        menu[position][1] = menu[position + 1][1];
+                        menu[position][2] = menu[position + 1][2];
+                        menu[position][3] = menu[position + 1][3];
+                        menu[position][4] = menu[position + 1][4];
+                        menu[position + 1][0] = "";
+                        menu[position + 1][1] = "";
+                        menu[position + 1][2] = "";
+                        menu[position + 1][3] = "";
+                        menu[position + 1][4] = "";
+                        probar = menu[position + 1][0];
+                        position++;
+                    } while (probar.equals("") && position < menu.length - 1);
+                } else {
+                    menu[position][0] = "";
+                    menu[position][1] = "";
+                    menu[position][2] = "";
+                    menu[position][3] = "";
+                    menu[position][4] = "";
+                }
+                listorden.deferNotifyDataSetChanged();
+                Actualizar();
+            }
+
+        });
     }
 }

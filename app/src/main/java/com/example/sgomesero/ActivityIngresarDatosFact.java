@@ -14,6 +14,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +40,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
 
     public void CrearCliente(View view){
         ingresarCliente();
+        razonsocial.setText("");
+        cedula.setText("");
+        direccion.setText("");
+        telefono.setText("");
+        correo.setText("");
     }
 
     private void ingresarCliente(){
@@ -94,8 +100,45 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                 !correo.getText().toString().trim().isEmpty();
     }
     public void Buscar(View view){
-        if( !cedula.getText().toString().trim().isEmpty()){
+        final String cdla;
+        cdla = cedula.getText().toString().trim();
+        String url = "https://safe-bastion-34410.herokuapp.com/api/cedulaclientes/"+ cdla;
 
+        if(!cdla.equals("")) {
+            AndroidNetworking.get(url)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String respuesta = response.getString("status");
+                                if (respuesta.equals("202")) {
+                                    JSONArray arrayDatos = response.getJSONArray("data");
+                                    for (int i = 0; i < arrayDatos.length(); i++) {
+                                        JSONObject jsonDatos = arrayDatos.getJSONObject(i);
+                                        String rzsocial = jsonDatos.getString("cli_nom");
+                                        String dircn = jsonDatos.getString("cli_dir");
+                                        String telf = jsonDatos.getString("cli_telf");
+                                        String mail = jsonDatos.getString("cli_email");
+                                        razonsocial.setText(rzsocial);
+                                        direccion.setText(dircn);
+                                        telefono.setText(telf);
+                                        correo.setText(mail);
+                                    }
+                                } else {
+                                    Toast.makeText(ActivityIngresarDatosFact.this, "No se ha registrado el cliente.", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(ActivityIngresarDatosFact.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            Toast.makeText(ActivityIngresarDatosFact.this, "Error: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 

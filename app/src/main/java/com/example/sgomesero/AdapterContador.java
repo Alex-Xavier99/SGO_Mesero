@@ -13,21 +13,21 @@ public class AdapterContador extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater = null;
-    ArrayAdapter<String> lista, lista1;
+    ArrayAdapter<String> listPlts, listPltsDscrp;
 
 
-    public AdapterContador(Context contexto, ArrayAdapter<String> lista,  ArrayAdapter<String> lista1) {
+    public AdapterContador(Context contexto, ArrayAdapter<String> lstPlts,  ArrayAdapter<String> lstPltsDscrp) {
         this.context = contexto;
-        this.lista = lista;
-        this.lista1 = lista1;
+        this.listPlts = lstPlts;
+        this.listPltsDscrp = lstPltsDscrp;
         inflater = (LayoutInflater)context.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
 
     }
 
     @Override
     public View getView(final int i, View convertView, ViewGroup parent) {
-        final int[] cantidad = new int[lista.getCount()];
-        for(int j=0;j<lista.getCount();j++) {
+        final int[] cantidad = new int[listPlts.getCount()];
+        for(int j = 0; j< listPlts.getCount(); j++) {
             cantidad[j]=0;
         }
 
@@ -37,8 +37,8 @@ public class AdapterContador extends BaseAdapter {
         final TextView num = vista1.findViewById(R.id.txtview_num);
         Button btnmenos = vista1.findViewById(R.id.btn_menos);
         Button btnmas = vista1.findViewById(R.id.btn_mas);
-        plto.setText(lista.getItem(i));
-        dscrp.setText(lista1.getItem(i));
+        plto.setText(listPlts.getItem(i));
+        dscrp.setText(listPltsDscrp.getItem(i));
         num.setText(String.valueOf(cantidad[i]));
 
         //Funcion contador boton menos
@@ -68,7 +68,7 @@ public class AdapterContador extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return lista.getCount();
+        return listPlts.getCount();
     }
 
     @Override

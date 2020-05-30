@@ -24,7 +24,7 @@ public class AdapterSelect extends BaseAdapter {
         int i,j;
         for(i=0;i<datos.length;i++){
             for(j = 0; j<datos[i].length;j++) {
-                if(j==4)
+                if(j==4 && datos[i][4]!="")
                     datos[i][4]= String.valueOf(Double.parseDouble(datos[i][2])*Double.parseDouble(datos[i][3]));
             }
         }
@@ -64,7 +64,7 @@ public class AdapterSelect extends BaseAdapter {
         double  res = 0;
         for(i=0;i<datos.length;i++){
             for(j = 0; j<datos[i].length;j++) {
-                if(j==4)
+                if(j==4 && datos[i][4]!="")
                     res += Double.parseDouble(datos[i][4]);
             }
         }
