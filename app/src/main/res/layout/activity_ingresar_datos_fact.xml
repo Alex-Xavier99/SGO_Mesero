@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="351dp"
-        android:layout_height="333dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,27 +19,27 @@
         app:layout_constraintVertical_bias="0.273">
 
         <EditText
-            android:id="@+id/txt_razonsocial"
+            android:id="@+id/txt_cedula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="0dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/txt_nombres"
-            android:inputType="textPersonName"
+            android:hint="@string/txt_identificacion"
+            android:inputType="number"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/txt_cedula"
+            android:id="@+id/txt_razonsocial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/txt_identificacion"
-            android:inputType="number"
+            android:hint="@string/txt_nombres"
+            android:inputType="textPersonName"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
             android:textSize="20sp" />
@@ -109,12 +109,20 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="Buscar"
+            android:text="@string/btn_buscar" />
+
+        <Button
             android:id="@+id/btn_realizar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="CrearCliente"
-            android:text="@string/txt_facturacion" />
+            android:text="@string/btn_facturacion" />
 
     </TableRow>
 

@@ -42,15 +42,15 @@
         app:layout_constraintTop_toBottomOf="@+id/list_ordenes">
 
         <Button
-            android:id="@+id/btn_confirmar"
+            android:id="@+id/btn_agregar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="Agregar"
-            android:text="@string/btn_confirmar" />
+            android:text="@string/btn_agregar" />
 
         <Button
-            android:id="@+id/btn_eliminar"
+            android:id="@+id/btn_confirmar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
