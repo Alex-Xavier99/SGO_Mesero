@@ -22,12 +22,6 @@ public class AdapterSelect extends BaseAdapter {
         this.datos = matriz;
         inflater = (LayoutInflater)context.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
         int i,j;
-        for(i=0;i<datos.length;i++){
-            for(j = 0; j<datos[i].length;j++) {
-                if(j==4 && datos[i][4]!="")
-                    datos[i][4]= String.valueOf(Double.parseDouble(datos[i][2])*Double.parseDouble(datos[i][3]));
-            }
-        }
     }
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -19,13 +20,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivitySelecionOrden extends AppCompatActivity {
 
     private ListView listViewPlts; // Variable lista de platos
-    ArrayAdapter<String> adptlistPlts, adptlistDscrpPlts; // lista de platos, lista descripcion
+
     ArrayList<String> selcItm = new ArrayList<>();
-    AdapterContador viewPltsCont;
+    ArrayList<String> adptlistPlts = new ArrayList<String>();// Lista de Platos
+    ArrayList<String> adptlistDscrpPlts = new ArrayList<String>(); //lista descripcion
+    ArrayList<String> listpvpPlts =  new ArrayList<String>(); //Lista pvp paltos
+    ArrayList<String> listIdPlts =  new ArrayList<String>(); //Lista id platos
+    String[][] menu;
+    AdapterContador viewPltsCont ;
+    int[] cantidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +41,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         setContentView(R.layout.activity_selecion_orden);
 
         listViewPlts = (ListView)findViewById(R.id.list_ordenes);
-        adptlistPlts = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);// Lista de Platos
-        adptlistDscrpPlts = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);// Lista descripcion de platos
-        viewPltsCont = new AdapterContador(this, adptlistPlts, adptlistDscrpPlts);// Adaptador para mostrar los elementos
+        listIdPlts = new ArrayList<String>();//Lista codigo de platos
+        Actualizar();
 
         AndroidNetworking.get("https://safe-bastion-34410.herokuapp.com/api/platos")
                 .setPriority(Priority.MEDIUM)
@@ -49,14 +56,21 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                                 JSONArray arrayPlatos = response.getJSONArray("data:");
                                 for(int i=0;i<arrayPlatos.length();i++){
                                     JSONObject jsonProducto = arrayPlatos.getJSONObject(i);
+                                    String IdPlato = jsonProducto.getString("id");
                                     String nombrePlato = jsonProducto.getString("plt_nom");
                                     String DscrpPlato = jsonProducto.getString("plt_des");
-                                    adptlistPlts.add(nombrePlato);
-                                    adptlistDscrpPlts.add(DscrpPlato);
+                                    String pvpPlato = jsonProducto.getString("plt_pvp");
+
+                                    listIdPlts.add(IdPlato);///Lista ID
+                                    adptlistPlts.add(nombrePlato);//Lista Plato
+                                    adptlistDscrpPlts.add(DscrpPlato);//Lista descripcion plato
+                                    listpvpPlts.add(pvpPlato);//Lista precio
+
                                 }
-                                adptlistPlts.notifyDataSetChanged();
-                                adptlistDscrpPlts.notifyDataSetChanged();
-                                listViewPlts.setAdapter(viewPltsCont);
+                                //adptlistPlts.notifyAll();
+                                //adptlistDscrpPlts.notify();
+                                Actualizar();
+
                             }else{
                                 Toast.makeText(ActivitySelecionOrden.this, "No hay ningun plato disponible.", Toast.LENGTH_LONG).show();
                             }
@@ -95,14 +109,51 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
 
     }
-
-    public void Agregar(View view){
-        String items="";
-        for(String item: selcItm){
-            items+="-"+item+"\n";
+    public void Actualizar(){
+        cantidad = new int[listIdPlts.size()];
+        for(int j = 0 ;j<listIdPlts.size();j++){
+            cantidad[j]=0;
         }
-        Toast.makeText(this, "Seleccionaste \n"+items, Toast.LENGTH_SHORT).show();
-        PasarActivity();
+        viewPltsCont = new AdapterContador(this, adptlistPlts, adptlistDscrpPlts,cantidad);// Adaptador para mostrar los elementos
+        listViewPlts.setAdapter(viewPltsCont);
+    }
+    public void Agregar(View view){
+
+        Intent verificarorden = new Intent(this,ActivityVerificarOrden.class);
+        PltsPrincipales();
+        verificarorden.putExtra("menu",(String [][]) menu);
+
+        startActivity(verificarorden);
+        finish();
+
+    }
+    public void PltsPrincipales(){
+        int j,cont = ContDifCero();
+        j = 0;
+        menu = new String[cont][5];
+       for(int i=0;i<listIdPlts.size(); i++)
+       {
+           if(cantidad[i] != 0) {
+               menu[j][0] = listIdPlts.get(i);
+               menu[j][1] = adptlistPlts.get(i);
+               menu[j][2] = String.valueOf(cantidad[i]);
+               menu[j][3] = listpvpPlts.get(i);
+               menu[j][4] = String.valueOf(Double.parseDouble(menu[j][2])*Double.parseDouble(menu[j][3]));;
+               j++;
+           }
+       }
+
+    }
+    public int ContDifCero(){
+        int i, cont = 0;
+        cantidad = viewPltsCont.Cantidad();
+        for (i=0;i<listIdPlts.size();i++) {
+            if (cantidad[i] != 0) {
+                cont++;
+            }
+        }
+        Toast.makeText(this,"Numero cont" + String.valueOf(cont),Toast.LENGTH_LONG).show();
+        return cont;
     }
     public void Regresar(View view){
         PasarActivity();

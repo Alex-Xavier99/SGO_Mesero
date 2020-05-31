@@ -51,7 +51,7 @@
 
     <string name="txt_plato">plato</string>
     <string name="btn_mas">+</string>
-    <string name="txt_num">Num</string>
+    <string name="txt_num">0</string>
     <string name="btn_menos">-</string>
 
 </resources>
