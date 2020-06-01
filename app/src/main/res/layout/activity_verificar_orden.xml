@@ -42,10 +42,9 @@
         android:id="@+id/tableRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Datosfact">
+        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle">
 
         <TextView
             android:id="@+id/textView"
@@ -151,37 +150,16 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="AgregarOrden"
+            android:onClick="agregarOrden"
             android:text="@string/btn_agregar" />
-
-        <Button
-            android:id="@+id/btn_confirmar"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_confirm"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_finalizar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="datosFactura"
             android:text="@string/btn_finali" />
     </TableRow>
-
-    <Button
-        android:id="@+id/btn_Datosfact"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:onClick="DatosFactura"
-        android:text="@string/btn_DatosFact"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

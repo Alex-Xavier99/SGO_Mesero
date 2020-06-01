@@ -26,7 +26,7 @@ public class ActivityLogin extends AppCompatActivity {
     EditText txt_pasw;
 
     //Variable para enviar al siguiente activity
-    private String id_empleado;
+    private String id_emp;
 
     final LoadingDialog loadingDialog = new LoadingDialog(ActivityLogin.this);
 
@@ -39,7 +39,7 @@ public class ActivityLogin extends AppCompatActivity {
         txt_user = (EditText)findViewById(R.id.editTextUsuer);
         txt_pasw = (EditText)findViewById(R.id.editTextPassword);
 
-        id_empleado = "";
+        id_emp = "";
     }
 
 
@@ -60,10 +60,9 @@ public class ActivityLogin extends AppCompatActivity {
 
                                 String mensaje = response.getString("message");
                                 Toast.makeText(ActivityLogin.this, mensaje, Toast.LENGTH_SHORT).show();
-                                //id_empleado = response.getString("empleado");
-                                id_empleado = "1"; //Linea de prueba
 
                                 if(mensaje.equals("Bienvenido")){
+                                    id_emp = response.getString("empleado");
                                     siguienteActivity();
                                 }
                             } catch (JSONException e) {
@@ -105,10 +104,16 @@ public class ActivityLogin extends AppCompatActivity {
 
     public void siguienteActivity(){
         Intent actSelMes = new Intent(this, ActivitySeleccionMesa.class);
-        actSelMes.putExtra("id_empleado",id_empleado);
+        actSelMes.putExtra("id_emp", id_emp);
         startActivity(actSelMes);
         finish();
         loadingDialog.dismissDialog();
+    }
+
+    public  void onBackPressed(){
+        //Crear alerta para cierre de aplicación
+
+        finish();
     }
 
 }

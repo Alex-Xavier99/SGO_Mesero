@@ -19,11 +19,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ActivitySeleccionMesa extends AppCompatActivity {
+
     private Spinner spin;
     private String [] cadspin;
-    private String num_mesa;
+    private String id_emp;
+    private String mes_num;
     private String id_pedido;
 
+    final AlertaCierreCesion alertaCierreCesion = new AlertaCierreCesion(ActivitySeleccionMesa.this);
 
 
     @Override
@@ -32,7 +35,8 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         setContentView(R.layout.activity_seleccion_mesa);
         spin = (Spinner)findViewById(R.id.spin_selectmesa);
 
-        num_mesa = "";
+        id_emp = getIntent().getStringExtra("id_emp");
+        mes_num = "";
         id_pedido = "";
 
         consultarMesas();
@@ -80,15 +84,15 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     }
 
     public void aceptar(View view){
-        num_mesa = spin.getSelectedItem().toString();//Selecciona el Item de objeto spinner
-        num_mesa = num_mesa.substring(5).trim();
+        mes_num = spin.getSelectedItem().toString();//Selecciona el Item de objeto spinner
+        mes_num = mes_num.substring(5).trim();
 
         verificarEstadoMesa();
         siguienteActivity();
     }
 
     public void verificarEstadoMesa(){
-        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas/" + num_mesa;
+        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas/" + mes_num;
 
         AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
@@ -98,13 +102,12 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             String respuesta = response.getString("status");
-                            if(respuesta.equals("200")){
+                            if(respuesta.equals("403")){
                                 //Estado mesa: Orden Terminada
                                 //Crear codigo Generar nueva orden
                             }else if(respuesta.equals("202")){
                                 //Estado mesa: Orden Iniciada
-                                JSONArray arrayPedidos = response.getJSONArray("pedidos");
-                                JSONObject pedido = arrayPedidos.getJSONObject(0);
+                                JSONObject pedido = response.getJSONObject("pedidos");
                                 id_pedido=pedido.getString("id");
                             }else{
                                 Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_LONG).show();
@@ -123,14 +126,19 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
 
     public void siguienteActivity(){
         Intent verificarorden = new Intent(this,ActivityVerificarOrden.class);
-        verificarorden.putExtra("mes_num", num_mesa);
+        verificarorden.putExtra("id_emp", id_emp);
+        verificarorden.putExtra("mes_num", mes_num);
         verificarorden.putExtra("id_pedido",id_pedido);
         startActivity(verificarorden);
     }
 
     @Override
     public  void onBackPressed(){
+        Intent activityLogin = new Intent(this,ActivityLogin.class);
+        startActivity(activityLogin);
+
         //Crear alerta para cierre de cesión
+        alertaCierreCesion.startLoadingDialog();
 
         finish();
     }

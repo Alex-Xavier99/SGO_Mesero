@@ -16,6 +16,10 @@
     <string name="btn_Cancelar">Cancelar</string>
     #end Activity Seleccion Mesa
 
+    <string name="txt_cierre_cesion">¿Desea cerrar la cesión?</string>
+    <string name="btn_si">SI</string>
+    <string name="btn_no">NO</string>
+
     <string name="txt_title2">Ingresar Datos Factura</string>
     <string name="txt_subtitle">Mesa Nro. 1</string>
     <string name="txt_nombres">Razón Social/Nombres y Apellidos</string>

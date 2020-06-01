@@ -14,25 +14,21 @@ import java.util.ArrayList;
 
 public class ActivityVerificarOrden extends AppCompatActivity {
 
-    private String subti;
     private TextView subtitle;
     private ListView listorden;
     private TextView restotal;
     private  Double res;
+
+    private String id_emp;
+    private String mes_num;
+    private String id_pedido;
+
     ArrayList<String> listIdPlts = new ArrayList<>();
     ArrayList<String> listPlts  = new ArrayList<>();
     ArrayList<String> listPvp = new ArrayList<>();
     int[] cantidad;
     private String [][] menu,menu2;
-    /*private String [][] menu = {
-            {"100", "Seco de Carne", "1", "2.00", "0.00"},
-            {"200", "Fanta", "2", "0.75", "0.00"},
-            {"300", "Encebollado", "3", "3.50", "0.00"},
-            {"400", "Gaseosa", "1", "0.50", "0.00"},
-            {"500", "Parrillada", "2", "5.00", "0.00"},
-            {"600", "Hamburguesa", "3", "3.00", "0.00"},
-            {"100", "Hot dog", "1", "1.50", "0.00"}
-    };*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +38,11 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
         subtitle = (TextView)findViewById(R.id.txtview_subtitle);
 
-        subti = getIntent().getStringExtra("mes_num");
-        subtitle.setText(subti);
+        id_emp = getIntent().getStringExtra("id_emp");
+        mes_num = getIntent().getStringExtra("mes_num");
+        id_pedido = getIntent().getStringExtra("id_pedido");
+
+        subtitle.setText("Mesa " + mes_num);
 
         Bundle menumat = getIntent().getExtras();
         menu2 = (String [][]) menumat.get("menu");//Recibe una matriz ActivitySeleccionOrden
@@ -64,12 +63,13 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                 }
             }
         }else
-            Verificar();
-        Actualizar();
-        EliminarItemArrayMenu();
+            verificar();
+        actualizar();
+        eliminarItemArrayMenu();
     }
+
     //Actualiza la lista en el caso de eliminar platos del menu
-    public void Actualizar(){
+    public void actualizar(){
         AdapterSelect apt = new AdapterSelect(this,menu);
         listorden.setAdapter(apt);
 
@@ -78,19 +78,17 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
     }
     //Agregar las ordenes del cliente
-    public void AgregarOrden(View view){
+    public void agregarOrden(View view){
         Intent tipoOrden = new Intent(this, ActivityTipoOrden.class);
         startActivity(tipoOrden);
-        //finish();
     }
     //Ingresar Datos del Cliente
-    public void DatosFactura(View view){
+    public void datosFactura(View view){
         Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
-        factura.putExtra("mes_num",subti);
+        factura.putExtra("mes_num", mes_num);
         startActivity(factura);
-        //finish();
     }
-    public void Verificar (){
+    public void verificar(){
         int i,j;
         menu = new String[menu2.length][5];
             for (i = 0; i < menu.length; i++) {
@@ -100,16 +98,15 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                 menu[i][3] =  menu2[i][3];
                 menu[i][4] =  menu2[i][4];
             }
-        Actualizar();
+        actualizar();
     }
     @Override
     public  void onBackPressed(){
-        Intent mesa = new Intent(this,ActivitySeleccionMesa.class);
-        startActivity(mesa);
+
         finish();
     }
     //Eliminar los Items de la lista
-    private void EliminarItemArrayMenu() {
+    private void eliminarItemArrayMenu() {
         listorden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -140,7 +137,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                     menu[position][4] = "";
                 }
                 listorden.deferNotifyDataSetChanged();
-                Actualizar();
+                actualizar();
             }
 
         });
