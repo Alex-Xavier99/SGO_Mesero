@@ -25,6 +25,9 @@ public class ActivityLogin extends AppCompatActivity {
     EditText txt_user;
     EditText txt_pasw;
 
+    //Variable para enviar al siguiente activity
+    private String id_empleado;
+
     final LoadingDialog loadingDialog = new LoadingDialog(ActivityLogin.this);
 
     @Override
@@ -35,10 +38,12 @@ public class ActivityLogin extends AppCompatActivity {
         //Cas de los elementos para usuario y contraseña en el Layout
         txt_user = (EditText)findViewById(R.id.editTextUsuer);
         txt_pasw = (EditText)findViewById(R.id.editTextPassword);
+
+        id_empleado = "";
     }
 
 
-    private void ingresarUser(String user, String pasw){
+    private void acceder(String user, String pasw){
             Map<String,String> datos = new HashMap<>();
             datos.put("email",user);
             datos.put("password",pasw);
@@ -55,9 +60,11 @@ public class ActivityLogin extends AppCompatActivity {
 
                                 String mensaje = response.getString("message");
                                 Toast.makeText(ActivityLogin.this, mensaje, Toast.LENGTH_SHORT).show();
+                                //id_empleado = response.getString("empleado");
+                                id_empleado = "1"; //Linea de prueba
 
                                 if(mensaje.equals("Bienvenido")){
-                                    IrSguienteActivity();
+                                    siguienteActivity();
                                 }
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityLogin.this, "Error1: "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -75,8 +82,8 @@ public class ActivityLogin extends AppCompatActivity {
 
 
     //Función que valida usuario y contraseña
-    public void Validar(View view){
-        if(isValidarCampos()) {
+    public void validarUserPasw(View view){
+        if(camposLlenos()) {
             String str_user = txt_user.getText().toString();
             String str_pasw = txt_pasw.getText().toString();
 
@@ -85,19 +92,20 @@ public class ActivityLogin extends AppCompatActivity {
 
             loadingDialog.startLoadingDialog();
 
-            ingresarUser(str_user, str_pasw);
+            acceder(str_user, str_pasw);
         } else {
             Toast.makeText(this, "No puede dejar los campos vacíos", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean isValidarCampos(){
+    private boolean camposLlenos(){
         return !txt_user.getText().toString().trim().isEmpty() &&
                 !txt_pasw.getText().toString().trim().isEmpty();
     }
 
-    public void IrSguienteActivity(){
+    public void siguienteActivity(){
         Intent actSelMes = new Intent(this, ActivitySeleccionMesa.class);
+        actSelMes.putExtra("id_empleado",id_empleado);
         startActivity(actSelMes);
         finish();
         loadingDialog.dismissDialog();

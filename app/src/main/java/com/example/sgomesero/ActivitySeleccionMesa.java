@@ -20,8 +20,10 @@ import org.json.JSONObject;
 
 public class ActivitySeleccionMesa extends AppCompatActivity {
     private Spinner spin;
-    private String [] ordenes;
-    String [] cadspin;
+    private String [] cadspin;
+    private String num_mesa;
+    private String id_pedido;
+
 
 
     @Override
@@ -30,8 +32,15 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         setContentView(R.layout.activity_seleccion_mesa);
         spin = (Spinner)findViewById(R.id.spin_selectmesa);
 
+        num_mesa = "";
+        id_pedido = "";
 
-        AndroidNetworking.get("https://safe-bastion-34410.herokuapp.com/api/mesas")
+        consultarMesas();
+    }
+
+    public void consultarMesas(){
+        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas";
+        AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -47,50 +56,82 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                                     String id = jsonProducto.getString("id");
                                     cadspin[i]=("Mesa " + id);
                                 }
-                                Llenar();
+                                llenarSpinner();
                             }else{
                                 Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(ActivitySeleccionMesa.this, "Error: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivitySeleccionMesa.this, "Error: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error2: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-
     }
 
-    public void Llenar(){
+    public void llenarSpinner(){
         if(!cadspin.equals(null)) {
             ArrayAdapter<String> opera = new ArrayAdapter<String>(this, R.layout.spinmesaselct, cadspin);//(Contexto, tipo de spiner,nombre del spin)
             spin.setAdapter(opera);
         }
     }
 
-    public void Aceptar(View view){
-        String selec, mesa ;
-        selec = spin.getSelectedItem().toString();//Selecciona el Item de objeto spinner
+    public void aceptar(View view){
+        num_mesa = spin.getSelectedItem().toString();//Selecciona el Item de objeto spinner
+        num_mesa = num_mesa.substring(5).trim();
 
-        PasarActivity(selec);
+        verificarEstadoMesa();
+        siguienteActivity();
     }
-    public void PasarActivity(String mesa){
+
+    public void verificarEstadoMesa(){
+        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas/" + num_mesa;
+
+        AndroidNetworking.get(url)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String respuesta = response.getString("status");
+                            if(respuesta.equals("200")){
+                                //Estado mesa: Orden Terminada
+                                //Crear codigo Generar nueva orden
+                            }else if(respuesta.equals("202")){
+                                //Estado mesa: Orden Iniciada
+                                JSONArray arrayPedidos = response.getJSONArray("pedidos");
+                                JSONObject pedido = arrayPedidos.getJSONObject(0);
+                                id_pedido=pedido.getString("id");
+                            }else{
+                                Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error2: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void siguienteActivity(){
         Intent verificarorden = new Intent(this,ActivityVerificarOrden.class);
-        verificarorden.putExtra("m1",mesa);
+        verificarorden.putExtra("mes_num", num_mesa);
+        verificarorden.putExtra("id_pedido",id_pedido);
         startActivity(verificarorden);
-        //finish();
     }
+
     @Override
     public  void onBackPressed(){
-        /*
-        Intent login = new Intent(this,ActivityLogin.class);
-        startActivity(login);
-         */
+        //Crear alerta para cierre de cesión
+
         finish();
     }
 }

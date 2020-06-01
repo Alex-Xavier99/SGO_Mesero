@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="236dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -51,7 +51,7 @@
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:onClick="Aceptar"
+            android:onClick="aceptar"
             android:text="@string/btn_Aceptar"
             android:textSize="20sp" />
 

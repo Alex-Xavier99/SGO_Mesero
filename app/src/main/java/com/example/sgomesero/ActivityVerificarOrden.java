@@ -42,7 +42,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
         subtitle = (TextView)findViewById(R.id.txtview_subtitle);
 
-        subti = getIntent().getStringExtra("m1");
+        subti = getIntent().getStringExtra("mes_num");
         subtitle.setText(subti);
 
         Bundle menumat = getIntent().getExtras();
@@ -50,6 +50,8 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
         listorden = (ListView)findViewById(R.id.listview_ordenes);
         restotal = (TextView)findViewById(R.id.txtview_totalres);
+
+
         menu = new String[1][5];
         if(menu.length==1 && menu2 == null) {
             for (i = 0; i < menu.length; i++) {
@@ -79,14 +81,14 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     public void AgregarOrden(View view){
         Intent tipoOrden = new Intent(this, ActivityTipoOrden.class);
         startActivity(tipoOrden);
-        finish();
+        //finish();
     }
     //Ingresar Datos del Cliente
     public void DatosFactura(View view){
         Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
-        factura.putExtra("m1",subti);
+        factura.putExtra("mes_num",subti);
         startActivity(factura);
-        finish();
+        //finish();
     }
     public void Verificar (){
         int i,j;
