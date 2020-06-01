@@ -30,38 +30,38 @@ public class ActivityTipoOrden extends AppCompatActivity {
 
     //Siguiente activity Verficar Orden
     public void Aperitivo(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Entrada");
     }
     public void Sopas(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Sopa");
     }
     public void PlatosFuertes(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Plato_Fuerte");
     }
     public void Ensaladas(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Ensaladas");
     }
     public void Mariscos(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Marisco");
     }
     public void Jugos(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Bebidas");
     }
     public void Postres(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Postres");
     }
     public void Promociones(View view){
-        SeleccionarOrden();
+        SeleccionarOrden("Promoción");
     }
-    public void SeleccionarOrden(){
+
+    public void SeleccionarOrden(String TipoOrden){
         Intent selectorden = new Intent(this, ActivitySelecionOrden.class);
+        selectorden.putExtra("TpOrden",TipoOrden);
         startActivity(selectorden);
         finish();
     }
     @Override
     public  void onBackPressed(){
-        Intent verificar= new Intent(this,ActivityVerificarOrden.class);
-        startActivity(verificar);
         finish();
     }
 }

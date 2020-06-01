@@ -111,18 +111,28 @@
         <Button
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:onClick="Buscar"
             android:text="@string/btn_buscar" />
 
         <Button
             android:id="@+id/btn_realizar"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:onClick="CrearCliente"
             android:text="@string/btn_facturacion" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/btn_finali" />
 
     </TableRow>
 

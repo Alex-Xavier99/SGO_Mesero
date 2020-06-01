@@ -26,20 +26,21 @@
     <ListView
         android:id="@+id/list_ordenes"
         android:layout_width="350dp"
-        android:layout_height="360dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableRow8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtview_title" />
 
     <TableRow
+        android:id="@+id/tableRow8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_ordenes">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btn_agregar"
@@ -54,7 +55,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Regresar"
+            android:onClick="Cancelar"
             android:text="@string/btn_Cancelar" />
     </TableRow>
 
