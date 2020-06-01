@@ -109,12 +109,11 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_buscar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="Buscar"
             android:text="@string/btn_buscar" />
 
         <Button

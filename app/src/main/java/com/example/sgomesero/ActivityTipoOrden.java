@@ -30,7 +30,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
 
     //Siguiente activity Verficar Orden
     public void Aperitivo(View view){
-        SeleccionarOrden("Entrada");
+        SeleccionarOrden("Aperitivo");
     }
     public void Sopas(View view){
         SeleccionarOrden("Sopa");
@@ -39,16 +39,16 @@ public class ActivityTipoOrden extends AppCompatActivity {
         SeleccionarOrden("Plato_Fuerte");
     }
     public void Ensaladas(View view){
-        SeleccionarOrden("Ensaladas");
+        SeleccionarOrden("Ensalada");
     }
     public void Mariscos(View view){
         SeleccionarOrden("Marisco");
     }
     public void Jugos(View view){
-        SeleccionarOrden("Bebidas");
+        SeleccionarOrden("Bebida");
     }
     public void Postres(View view){
-        SeleccionarOrden("Postres");
+        SeleccionarOrden("Postre");
     }
     public void Promociones(View view){
         SeleccionarOrden("Promoción");

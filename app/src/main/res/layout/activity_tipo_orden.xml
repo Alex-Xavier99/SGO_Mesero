@@ -50,7 +50,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_sopas"
             android:onClick="Sopas"
-            app:srcCompat="@mipmap/sopa" />
+            app:srcCompat="@mipmap/sopas" />
 
         <ImageButton
             android:id="@+id/img_fuerte"

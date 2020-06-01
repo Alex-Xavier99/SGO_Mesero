@@ -25,8 +25,13 @@
     <string name="btn_buscar">Buscar Cliente</string>
     <string name="btn_facturacion">Ingresar Cliente</string>
 
+    <string name="txt_Title">Buscar Cliente</string>
+    <string name="txt_ingrcedul">Ingresar Cédula</string>
+    <string name="btn_busca">Buscar</string>
+    <string name="btn_cancelar">Cancelar</string>
 
-    <string name="txt_title3">Tipo de Orden</string>
+
+    <string name="txt_title3">Categoria</string>
     <string name="txt_aperitivos">Aperitivos</string>
     <string name="txt_sopas">Sopas</string>
     <string name="txt_plfuertes">Platos Fuertes</string>

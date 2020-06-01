@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -22,7 +19,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ActivitySelecionOrden extends AppCompatActivity {
@@ -56,7 +52,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         Actualizar();
         int a = 1;
         switch(TpOrden){
-            case "Entrada":
+            case "Aperitivo":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Sopa":
@@ -65,16 +61,16 @@ public class ActivitySelecionOrden extends AppCompatActivity {
             case "Plato_Fuerte":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
-            case "Ensaladas":
+            case "Ensalada":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Marisco":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
-            case "Bebidas":
+            case "Bebida":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
-            case "Postres":
+            case "Postre":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Promoción":
@@ -159,18 +155,15 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
     }
     public void Agregar(View view){
-
-        Intent verificarorden = new Intent(this,ActivityVerificarOrden.class);
-        PltsPrincipales();
-        verificarorden.putExtra("menu",(String [][]) menu);
-        //IngresarPltsOrden();
-        startActivity(verificarorden);
+        pltsPrincipales();
+        ingresarPltsOrden();
         finish();
 
     }
-    public void PltsPrincipales(){
+    //Se ingresa a la matriz menu los datos validos
+    public void pltsPrincipales(){
         int j;
-        tmnmenu = ContDifCero();
+        tmnmenu = contDifCero();
         j = 0;
         menu = new String[tmnmenu][5];
        for(int i=0;i<listIdPlts.size(); i++)
@@ -186,7 +179,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
        }
 
     }
-    public int ContDifCero(){
+    //La funcion cuenta el numero de platos que se va ingresar
+    public int contDifCero(){
         int i, cont = 0;
         cantidad = viewPltsCont.Cantidad();
         for (i=0;i<listIdPlts.size();i++) {
@@ -197,7 +191,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         Toast.makeText(this,"Platos Ingresados " + String.valueOf(cont),Toast.LENGTH_LONG).show();
         return cont;
     }
-    private void IngresarPltsOrden() {
+    //Se ingresa los pedido a la Base de datos
+    private void ingresarPltsOrden() {
 
         Map<String, String > datos = new HashMap<>();
 
