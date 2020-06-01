@@ -1,7 +1,9 @@
 package com.example.sgomesero;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -111,9 +113,25 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public  void onBackPressed(){
-        //Crear alerta para cierre de aplicación
+        AlertDialog.Builder alerta = new AlertDialog.Builder(ActivityLogin.this);
+        alerta.setMessage("¿Desea cerrar SGO Mesero?")
+                .setCancelable(true)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
-        finish();
+        AlertDialog titulo = alerta.create();
+        titulo.setTitle("Cerrar aplicación");
+        titulo.show();
     }
 
 }

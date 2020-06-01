@@ -1,7 +1,9 @@
 package com.example.sgomesero;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,9 +27,6 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     private String id_emp;
     private String mes_num;
     private String id_pedido;
-
-    final AlertaCierreCesion alertaCierreCesion = new AlertaCierreCesion(ActivitySeleccionMesa.this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,12 +133,28 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
 
     @Override
     public  void onBackPressed(){
-        Intent activityLogin = new Intent(this,ActivityLogin.class);
-        startActivity(activityLogin);
 
-        //Crear alerta para cierre de cesión
-        alertaCierreCesion.startLoadingDialog();
+        AlertDialog.Builder alerta = new AlertDialog.Builder(ActivitySeleccionMesa.this);
+        alerta.setMessage("¿Desea cerrar cesión?")
+                .setCancelable(true)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent activityLogin = new Intent(ActivitySeleccionMesa.this,ActivityLogin.class);
+                        startActivity(activityLogin);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
-        finish();
+        AlertDialog titulo = alerta.create();
+        titulo.setTitle("Cerrar cesión");
+        titulo.show();
+
     }
 }
