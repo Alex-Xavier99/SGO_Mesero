@@ -29,15 +29,21 @@
     <string name="txt_email">E-mail</string>
     <string name="txt_ingorden">Ingresar Orden</string>
     <string name="btn_buscar">Buscar Cliente</string>
-    <string name="btn_facturacion">Realizar factura</string>
+    <string name="btn_facturacion">Ingresar Cliente</string>
 
-    <string name="txt_title3">Tipo de Orden</string>
+    <string name="txt_Title">Buscar Cliente</string>
+    <string name="txt_ingrcedul">Ingresar Cédula</string>
+    <string name="btn_busca">Buscar</string>
+    <string name="btn_cancelar">Cancelar</string>
+
+
+    <string name="txt_title3">Categoria</string>
     <string name="txt_aperitivos">Aperitivos</string>
     <string name="txt_sopas">Sopas</string>
     <string name="txt_plfuertes">Platos Fuertes</string>
     <string name="txt_ensalada">Ensaladas</string>
     <string name="txt_mariscos">Mariscos</string>
-    <string name="txt_jugos">Jugos</string>
+    <string name="txt_jugos">Bebidas</string>
     <string name="txt_postres">Postres</string>
     <string name="txt_promociones">Promociones</string>
     <string name="textview">TextView</string>

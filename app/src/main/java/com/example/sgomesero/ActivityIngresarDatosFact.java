@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,10 +22,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityIngresarDatosFact extends AppCompatActivity {
+public class ActivityIngresarDatosFact extends AppCompatActivity implements DialogBuscarCliente.Finalizarcuadrodialogo{
 
     private TextView subtitle;
     private EditText razonsocial, cedula, direccion, telefono,correo;
+    private Button btnBuscar;
+    DialogBuscarCliente dialogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,15 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
         direccion = (EditText)findViewById(R.id.txt_direccion);//Servira para leer los datos ingresados de la direccion
         telefono = (EditText)findViewById(R.id.txt_telefono);//Servira para leer los datos del telefono
         correo = (EditText)findViewById(R.id.txt_correo);//Servira para leer los datos del correo
+        btnBuscar = (Button)findViewById(R.id.btn_buscar);
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogo = new DialogBuscarCliente(ActivityIngresarDatosFact.this,ActivityIngresarDatosFact.this);
+            }
+        });
+
     }
 
     public void CrearCliente(View view){
@@ -99,12 +111,14 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                 !telefono.getText().toString().trim().isEmpty() &&
                 !correo.getText().toString().trim().isEmpty();
     }
-    public void Buscar(View view){
-        final String cdla;
-        cdla = cedula.getText().toString().trim();
-        String url = "https://safe-bastion-34410.herokuapp.com/api/cedulaclientes/"+ cdla;
+    @Override
+    public void ResultadoCuadroDialogo(String cedulacliente) {
+        bucarCliente(cedulacliente);
+    }
+    public void bucarCliente(final String cedulaBsqd){
 
-        if(!cdla.equals("")) {
+        if(!cedulaBsqd.equals("")) {
+        String url = "https://safe-bastion-34410.herokuapp.com/api/cedulaclientes/"+ cedulaBsqd;
             AndroidNetworking.get(url)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -121,6 +135,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                                         String dircn = jsonDatos.getString("cli_dir");
                                         String telf = jsonDatos.getString("cli_telf");
                                         String mail = jsonDatos.getString("cli_email");
+                                        cedula.setText(cedulaBsqd);
                                         razonsocial.setText(rzsocial);
                                         direccion.setText(dircn);
                                         telefono.setText(telf);
@@ -130,13 +145,13 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
                                     Toast.makeText(ActivityIngresarDatosFact.this, "No se ha registrado el cliente.", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(ActivityIngresarDatosFact.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActivityIngresarDatosFact.this, "Error1: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
                         public void onError(ANError anError) {
-                            Toast.makeText(ActivityIngresarDatosFact.this, "Error: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityIngresarDatosFact.this, "Error2: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -153,4 +168,6 @@ public class ActivityIngresarDatosFact extends AppCompatActivity {
         startActivity(verificar);*/
         finish();
     }
+
+
 }

@@ -35,12 +35,12 @@
         <ImageButton
             android:id="@+id/img_aperitivo"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_aperitivos"
             android:onClick="Aperitivo"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/aperitivo" />
 
         <ImageButton
             android:id="@+id/img_sopa"
@@ -50,7 +50,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_sopas"
             android:onClick="Sopas"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/sopas" />
 
         <ImageButton
             android:id="@+id/img_fuerte"
@@ -60,7 +60,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_plfuertes"
             android:onClick="PlatosFuertes"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/platofuerte" />
 
     </TableRow>
 
@@ -123,7 +123,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_ensalada"
             android:onClick="Ensaladas"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/ensaladas" />
 
         <ImageButton
             android:id="@+id/img_marisco"
@@ -133,7 +133,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_mariscos"
             android:onClick="Mariscos"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/mariscos" />
 
         <ImageButton
             android:id="@+id/img_jugo"
@@ -143,7 +143,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_jugos"
             android:onClick="Jugos"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/bebidas" />
 
     </TableRow>
 
@@ -205,7 +205,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_postres"
             android:onClick="Postres"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/postres" />
 
         <ImageButton
             android:id="@+id/img_promo"
@@ -215,7 +215,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/txt_promociones"
             android:onClick="Promociones"
-            app:srcCompat="@drawable/dishuno" />
+            app:srcCompat="@mipmap/promociones" />
 
     </TableRow>
 
