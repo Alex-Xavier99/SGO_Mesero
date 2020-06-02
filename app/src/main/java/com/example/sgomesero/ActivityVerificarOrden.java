@@ -15,18 +15,15 @@ import java.util.ArrayList;
 public class ActivityVerificarOrden extends AppCompatActivity {
 
     private TextView subtitle;
-    private ListView listorden;
-    private TextView restotal;
+    private ListView list_orden;
+    private TextView res_total;
     private  Double res;
 
     private String id_emp;
     private String mes_num;
     private String id_pedido;
 
-    ArrayList<String> listIdPlts = new ArrayList<>();
-    ArrayList<String> listPlts  = new ArrayList<>();
     ArrayList<String> listPvp = new ArrayList<>();
-    int[] cantidad;
     private String [][] menu,menu2;
 
 
@@ -42,13 +39,15 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
 
+        Toast.makeText(this,"Id pedido: " + id_pedido,Toast.LENGTH_SHORT).show();
+
         subtitle.setText("Mesa " + mes_num);
 
         Bundle menumat = getIntent().getExtras();
         menu2 = (String [][]) menumat.get("menu");//Recibe una matriz ActivitySeleccionOrden
 
-        listorden = (ListView)findViewById(R.id.listview_ordenes);
-        restotal = (TextView)findViewById(R.id.txtview_totalres);
+        list_orden = (ListView)findViewById(R.id.listview_ordenes);
+        res_total = (TextView)findViewById(R.id.txtview_totalres);
 
 
         menu = new String[1][5];
@@ -71,10 +70,10 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     //Actualiza la lista en el caso de eliminar platos del menu
     public void actualizar(){
         AdapterSelect apt = new AdapterSelect(this,menu);
-        listorden.setAdapter(apt);
+        list_orden.setAdapter(apt);
 
         res = apt.Operacion();
-        restotal.setText(String.valueOf(res));
+        res_total.setText(String.valueOf(res));
 
     }
     //Agregar las ordenes del cliente
@@ -107,7 +106,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     }
     //Eliminar los Items de la lista
     private void eliminarItemArrayMenu() {
-        listorden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_orden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String probar;
@@ -136,7 +135,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                     menu[position][3] = "";
                     menu[position][4] = "";
                 }
-                listorden.deferNotifyDataSetChanged();
+                list_orden.deferNotifyDataSetChanged();
                 actualizar();
             }
 
