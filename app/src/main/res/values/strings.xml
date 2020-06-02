@@ -50,9 +50,9 @@
     <string name="btn_fact">Facturar</string>
 
     <string name="txt_title4">Verificar Orden</string>
-    <string name="btn_agregar">Agregar</string>
+    <string name="btn_agregar">Agregar Plato</string>
     <string name="btn_confirm">Confirmar</string>
-    <string name="btn_finali">Finalizar</string>
+    <string name="btn_finali">Facturar</string>
     <string name="btn_DatosFact">Ingresar Datos Facturación</string>
     <string name="txt_cod">Cod</string>
     <string name="txt_descrip">Descripción</string>
