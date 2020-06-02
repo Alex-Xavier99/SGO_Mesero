@@ -2,8 +2,8 @@ package com.example.sgomesero;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,7 +31,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
     ArrayList<String> listpvpPlts =  new ArrayList<String>(); //Lista pvp paltos
     ArrayList<String> listIdPlts =  new ArrayList<String>(); //Lista id platos
     String[][] menu;
-    String TpOrden,url,id_pedido,mes_num;
+    String TpOrden,url,id_pedido,id_emp;
     AdapterContador viewPltsCont ;
     int tmnmenu;
     int[] cantidad;
@@ -46,11 +46,10 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         listIdPlts = new ArrayList<String>();//Lista codigo de platos
         TpOrden = getIntent().getExtras().getString("TpOrden");
 
-        //id_pedido = getIntent().getExtras().getString("id_pedido");
-        id_pedido = "1";
-        mes_num = "2";
-        Actualizar();
-        int a = 1;
+        id_pedido = getIntent().getExtras().getString("id_pedido");
+        id_emp = getIntent().getExtras().getString("id_emp");
+
+        presentarPlts();
         switch(TpOrden){
             case "Aperitivo":
                 url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
@@ -103,9 +102,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                                     listpvpPlts.add(pvpPlato);//Lista precio
 
                                 }
-                                //adptlistPlts.notifyAll();
-                                //adptlistDscrpPlts.notify();
-                                Actualizar();
+                                presentarPlts();
 
                             }else{
                                 Toast.makeText(ActivitySelecionOrden.this, "No hay ningun plato disponible.", Toast.LENGTH_LONG).show();
@@ -121,31 +118,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                     }
                 });
 
-        /*
-        if(ordenes != null) {
-
-            listorden.setAdapter(lista);
-            lista = new ArrayAdapter<String>(this, R.layout.row_layout, R.id.checkedTextView, ordenes);
-
-
-            listorden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String seleccionaritem = ((TextView) view).getText().toString();
-                    if (seleccionaritems.contains(seleccionaritem)) {
-                        seleccionaritems.remove(seleccionaritem);
-                    } else {
-                        seleccionaritems.add(seleccionaritem);
-                    }
-                }
-            });
-        }
-
-         */
-
-
     }
-    public void Actualizar(){
+    public void presentarPlts(){
         cantidad = new int[listIdPlts.size()];
         for(int j = 0 ;j<listIdPlts.size();j++){
             cantidad[j]=0;
@@ -156,8 +130,6 @@ public class ActivitySelecionOrden extends AppCompatActivity {
     }
     public void Agregar(View view){
         pltsPrincipales();
-        ingresarPltsOrden();
-        finish();
 
     }
     //Se ingresa a la matriz menu los datos validos
@@ -173,10 +145,18 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                menu[j][1] = adptlistPlts.get(i);
                menu[j][2] = String.valueOf(cantidad[i]);
                menu[j][3] = listpvpPlts.get(i);
-               menu[j][4] = String.valueOf(Integer.parseInt(menu[j][2])*Double.parseDouble(menu[j][3]));;
+               menu[j][4] = String.valueOf(Integer.parseInt(menu[j][2])*Double.parseDouble(menu[j][3]));
+               ingresarPltsOrden(menu[j][0], menu[j][2],menu[j][4]);
                j++;
            }
        }
+        new Handler().postDelayed(new Runnable() {
+
+            public void run() {
+                finish();
+            }
+        }, 500);
+
 
     }
     //La funcion cuenta el numero de platos que se va ingresar
@@ -188,21 +168,18 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                 cont++;
             }
         }
-        Toast.makeText(this,"Platos Ingresados " + String.valueOf(cont),Toast.LENGTH_LONG).show();
         return cont;
     }
     //Se ingresa los pedido a la Base de datos
-    private void ingresarPltsOrden() {
+    private void ingresarPltsOrden(String idplato, String dtallcant,String dtallvalor) {
 
-        Map<String, String > datos = new HashMap<>();
+        Map<String,String> datos = new HashMap<>();
 
-        for (int i = 0; i < menu.length; i++) {
             datos.put("idPedido", id_pedido);
-            datos.put("idPlato",  menu[i][0]);
-            //datos.put("idFac", "1");
-            datos.put("dtall_cant", menu[i][2]);
-            datos.put("dtall_valor", menu[i][4]);
-        }
+            datos.put("idPlato",  idplato);
+            datos.put("dtall_cant", dtallcant);
+            datos.put("dtall_valor",  dtallvalor);
+
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/detalles")
@@ -215,10 +192,10 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                         try {
 
                             String mensaje = response.getString("message");
-                            Toast.makeText(ActivitySelecionOrden.this, mensaje, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivitySelecionOrden.this, mensaje , Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
-                            Toast.makeText(ActivitySelecionOrden.this, "Error:1 " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivitySelecionOrden.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
