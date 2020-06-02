@@ -66,11 +66,6 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     public void CrearCliente(View view){
         ingresarCliente();
-        razonsocial.setText("");
-        cedula.setText("");
-        direccion.setText("");
-        telefono.setText("");
-        correo.setText("");
     }
 
     private void ingresarCliente(){
@@ -180,8 +175,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     public void finalizarOrden(View view){
 
-       if(!id_cliente.equals("")){
+       if(isValidarCampos()){
            generarFactura(id_emp, id_cliente);
+       }
+       else{
+           Toast.makeText(this, "No se puede facturar, existen campos vacios", Toast.LENGTH_LONG).show();
        }
     }
 

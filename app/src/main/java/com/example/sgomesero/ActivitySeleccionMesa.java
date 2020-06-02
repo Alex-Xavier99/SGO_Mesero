@@ -181,7 +181,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     public  void onBackPressed(){
 
         AlertDialog.Builder alerta = new AlertDialog.Builder(ActivitySeleccionMesa.this);
-        alerta.setMessage("¿Desea cerrar cesión?")
+        alerta.setMessage("¿Desea cerrar sesión?")
                 .setCancelable(true)
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
@@ -199,7 +199,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                 });
 
         AlertDialog titulo = alerta.create();
-        titulo.setTitle("Cerrar cesión");
+        titulo.setTitle("Cerrar sesión");
         titulo.show();
 
     }

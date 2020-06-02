@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +56,6 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
 
-        Toast.makeText(this,"Id pedido: " + id_pedido,Toast.LENGTH_SHORT).show();
-
         subtitle.setText("Mesa " + mes_num);
 
 
@@ -102,11 +101,17 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     }
     //Ingresar Datos del Cliente
     public void datosFactura(View view){
-        Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
-        factura.putExtra("id_pedido",id_pedido);
-        factura.putExtra("id_emp",id_emp);
-        startActivity(factura);
-        finish();
+
+        if(!menu[0][0].equals("")) {
+            Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
+            factura.putExtra("id_pedido", id_pedido);
+            factura.putExtra("id_emp", id_emp);
+            startActivity(factura);
+            finish();
+        }else
+        {
+            Toast.makeText(this,"No hay platos disponibles",Toast.LENGTH_LONG).show();
+        }
     }
     //Se coloca en la matriz para poder mostrar los datos
     public void mostrarDetalle(){
@@ -176,7 +181,6 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent activityLogin = new Intent(ActivityVerificarOrden.this, ActivityLogin.class);
                                 eliminaItemBDD(position);
                                 dialog.cancel();
                             }

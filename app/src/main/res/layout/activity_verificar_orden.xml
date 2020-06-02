@@ -13,12 +13,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="@string/txt_title4"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtview_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,22 +31,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/txt_subtitle"
         android:textColor="@android:color/black"
         android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableRow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_title" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TableRow
         android:id="@+id/tableRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/listview_ordenes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtview_subtitle">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView"
@@ -105,18 +108,21 @@
     <ListView
         android:id="@+id/listview_ordenes"
         android:layout_width="0dp"
-        android:layout_height="242dp"
+        android:layout_height="350dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableRow10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TableRow
+        android:id="@+id/tableRow10"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableRow9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listview_ordenes">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView7"
@@ -138,6 +144,7 @@
     </TableRow>
 
     <TableRow
+        android:id="@+id/tableRow9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -154,7 +161,7 @@
             android:text="@string/btn_agregar" />
 
         <Button
-            android:id="@+id/btn_finalizar"
+            android:id="@+id/btn_factura"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
