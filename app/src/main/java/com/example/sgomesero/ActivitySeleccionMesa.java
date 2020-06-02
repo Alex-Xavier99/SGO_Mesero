@@ -20,6 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ActivitySeleccionMesa extends AppCompatActivity {
 
     private Spinner spin;
@@ -87,7 +92,6 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         mes_num = mes_num.substring(5).trim();
 
         verificarEstadoMesa();
-        siguienteActivity();
     }
 
     public void verificarEstadoMesa(){
@@ -100,19 +104,61 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            String respuesta = response.getString("status");
-                            if(respuesta.equals("403")){
+                            String status = response.getString("status");
+                            if(status.equals("200")){
                                 //Estado mesa: Orden Terminada
-                                //Crear codigo Generar nueva orden
-                            }else if(respuesta.equals("202")){
+                                generarNuevoPedido();
+                            }else if(status.equals("202")){
                                 //Estado mesa: Orden Iniciada
-                                JSONObject pedido = response.getJSONObject("pedidos");
-                                id_pedido=pedido.getString("id");
+                                JSONArray pedidoarray = response.getJSONArray("pedidos");
+                                JSONObject pedido = pedidoarray.getJSONObject(0);
+                                id_pedido = pedido.getString("id");
+
+                                siguienteActivity();
                             }else{
-                                Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_SHORT).show();
                             }
+
                         } catch (JSONException e) {
-                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void generarNuevoPedido(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(new Date());
+
+        Map<String,String> datos = new HashMap<>();
+        datos.put("idEmpleado",id_emp);
+        datos.put("idMesa",mes_num);
+        datos.put("idEstado","1");
+        datos.put("ped_fch",date);
+        JSONObject jsonData = new JSONObject(datos);
+
+        AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/pedidos")
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String mensaje = response.getString("message");
+                            JSONObject data = response.getJSONObject("data");
+                            id_pedido = data.getString("id");
+                            Toast.makeText(ActivitySeleccionMesa.this, mensaje, Toast.LENGTH_SHORT).show();
+
+                            siguienteActivity();
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
