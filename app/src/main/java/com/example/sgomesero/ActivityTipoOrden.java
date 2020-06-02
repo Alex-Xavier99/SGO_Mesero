@@ -12,6 +12,10 @@ public class ActivityTipoOrden extends AppCompatActivity {
     private TextView subtitle;
     private ImageButton imgaperitivo,imgsopa,imgfuerte,imgensalada,imgmariscos,imgjugos,imgpostre,imgpromo;
 
+    private String id_emp;
+    private String mes_num;
+    private String id_pedido;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,9 @@ public class ActivityTipoOrden extends AppCompatActivity {
         imgpostre = (ImageButton)findViewById(R.id.img_postre);
         imgpromo = (ImageButton)findViewById(R.id.img_promo);
 
+        id_emp = getIntent().getStringExtra("id_emp");
+        mes_num = getIntent().getStringExtra("mes_num");
+        id_pedido = getIntent().getStringExtra("id_pedido");
     }
 
     //Siguiente activity Verficar Orden
@@ -57,6 +64,8 @@ public class ActivityTipoOrden extends AppCompatActivity {
     public void SeleccionarOrden(String TipoOrden){
         Intent selectorden = new Intent(this, ActivitySelecionOrden.class);
         selectorden.putExtra("TpOrden",TipoOrden);
+        selectorden.putExtra("id_emp", id_emp);
+        selectorden.putExtra("id_pedido",id_pedido);
         startActivity(selectorden);
         finish();
     }
