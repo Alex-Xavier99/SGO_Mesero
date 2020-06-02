@@ -14,11 +14,14 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +30,12 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     private TextView subtitle;
     private EditText razonsocial, cedula, direccion, telefono,correo;
     private Button btnBuscar;
+
+    private String id_emp;
+    private String id_pedido;
+
+    private String id_cliente;
+    private String id_fact;
     DialogBuscarCliente dialogo;
 
     @Override
@@ -40,6 +49,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         telefono = (EditText)findViewById(R.id.txt_telefono);//Servira para leer los datos del telefono
         correo = (EditText)findViewById(R.id.txt_correo);//Servira para leer los datos del correo
         btnBuscar = (Button)findViewById(R.id.btn_buscar);
+
+        id_emp = getIntent().getStringExtra("id_emp");
+        id_pedido = getIntent().getStringExtra("id_pedido");
+        id_cliente = "";
+        id_fact = "";
 
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +102,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
                                 String mensaje = response.getString("message");
                                 Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+                                String status = response.getString("status");
+                                if (status.equals("202")) {
+                                    JSONObject datos = response.getJSONObject("data");
+                                    id_cliente = datos.getString("id");
+                                }
 
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -140,7 +159,9 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                                         direccion.setText(dircn);
                                         telefono.setText(telf);
                                         correo.setText(mail);
+                                        id_cliente = jsonDatos.getString("id");
                                     }
+
                                 } else {
                                     Toast.makeText(ActivityIngresarDatosFact.this, "No se ha registrado el cliente.", Toast.LENGTH_LONG).show();
                                 }
@@ -157,11 +178,124 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         }
     }
 
-    public void DatosFactura(View view){
-        Intent verificarorden = new Intent(this, ActivityVerificarOrden.class);
-        startActivity(verificarorden);
-        finish();
+    public void finalizarOrden(View view){
+
+       if(!id_cliente.equals("")){
+           generarFactura(id_emp, id_cliente);
+       }
     }
+
+    public void generarFactura(String empleado, String cliente){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(new Date());
+
+        Map<String,String> datos = new HashMap<>();
+        datos.put("idEmpleado",empleado);
+        datos.put("idCliente",cliente);
+        datos.put("fct_fch",date);
+        JSONObject jsonData = new JSONObject(datos);
+
+        AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/facs")
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String mensaje = response.getString("message");
+                            Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+                            String status = response.getString("status");
+                            if(status.equals("202")){
+                                JSONObject datos = response.getJSONObject("data");
+                                id_fact = datos.getString("id");
+                                if(!id_fact.equals("")){
+                                    actualizarDetalle(id_pedido);
+
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivityIngresarDatosFact.this, "ErrorFacs: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    public void actualizarDetalle(String pedido){
+        String url = "https://safe-bastion-34410.herokuapp.com/api/acfacdetalles/" + pedido;
+        Map<String,String> datos = new HashMap<>();
+        datos.put("idFac",id_fact);
+        JSONObject jsonData = new JSONObject(datos);
+
+        AndroidNetworking.patch(url)
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String mensaje = response.getString("message");
+                            Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+                            if(!id_emp.equals("")) {
+                                actualizarEstadoPedido(id_pedido);
+                                finish();
+                            }
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivityIngresarDatosFact.this, "ErrorDet: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void actualizarEstadoPedido(String pedido){
+        String url = "https://safe-bastion-34410.herokuapp.com/api/pedidos/" + pedido;
+        Map<String,String> datos = new HashMap<>();
+        datos.put("ped_terminado","true");
+        JSONObject jsonData = new JSONObject(datos);
+
+        AndroidNetworking.patch(url)
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String mensaje = response.getString("message");
+                            Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivityIngresarDatosFact.this, "ErrorPed: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
     @Override
     public  void onBackPressed(){
         /*Intent verificar = new Intent(this,ActivityVerificarOrden.class);
