@@ -51,7 +51,7 @@ public class ActivityLogin extends AppCompatActivity {
             datos.put("password",pasw);
             JSONObject jsonData = new JSONObject(datos);
 
-            AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/login")
+            AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/login")
                     .addJSONObjectBody(jsonData)
                     .setPriority(Priority.MEDIUM)
                     .build()

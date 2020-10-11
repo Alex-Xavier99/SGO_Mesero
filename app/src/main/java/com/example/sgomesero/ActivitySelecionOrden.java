@@ -50,34 +50,40 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         id_emp = getIntent().getExtras().getString("id_emp");
 
         presentarPlts();
-        switch(TpOrden){
+        if(!TpOrden.isEmpty() && !TpOrden.equals(null))
+        {
+            url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
+        }
+        else
+            Toast.makeText(this,"No se encuentran Registros"+TpOrden,Toast.LENGTH_LONG).show();
+        /*switch(TpOrden){
             case "Aperitivo":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Sopa":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Plato_Fuerte":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Ensalada":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Marisco":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Bebida":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Postre":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             case "Promoción":
-                url = "https://safe-bastion-34410.herokuapp.com/api/tipoplatos/"+TpOrden;
+                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
                 break;
             default:
                 Toast.makeText(this,"No se encuentran Registros"+TpOrden,Toast.LENGTH_LONG).show();
-        }
+        }*/
 
         AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
@@ -182,7 +188,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
         JSONObject jsonData = new JSONObject(datos);
 
-        AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/detalles")
+        AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/detalles")
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()

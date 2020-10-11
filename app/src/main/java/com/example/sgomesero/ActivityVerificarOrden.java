@@ -127,7 +127,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     }
     //Buscar en la BDD el datalle de acuerdo al pedido
     public void buscarDetalle(){
-        String url = "http://safe-bastion-34410.herokuapp.com/api/platopedidos/"+id_pedido;
+        String url = "https://sgo-central-6to.herokuapp.com/api/platopedidos/"+id_pedido;
         if(!id_pedido.equals("")) {
             AndroidNetworking.get(url)
                     .setPriority(Priority.MEDIUM)
@@ -202,7 +202,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     //Eliman los datos de la base de datos
     public void eliminaItemBDD(int position){
         String id = listIdDtall.get(position);
-        String url = "https://safe-bastion-34410.herokuapp.com/api/detalles/"+id;
+        String url = "https://sgo-central-6to.herokuapp.com/api/detalles/"+id;
 
         JSONObject jsonData = new JSONObject();
         AndroidNetworking.delete(url)
