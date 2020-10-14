@@ -66,11 +66,6 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     public void CrearCliente(View view){
         ingresarCliente();
-        razonsocial.setText("");
-        cedula.setText("");
-        direccion.setText("");
-        telefono.setText("");
-        correo.setText("");
     }
 
     private void ingresarCliente(){
@@ -91,7 +86,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
             datos.put("cli_telf",telf);
             JSONObject jsonData = new JSONObject(datos);
 
-            AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/clientes")
+            AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/clientes")
                     .addJSONObjectBody(jsonData)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -137,7 +132,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     public void bucarCliente(final String cedulaBsqd){
 
         if(!cedulaBsqd.equals("")) {
-        String url = "https://safe-bastion-34410.herokuapp.com/api/cedulaclientes/"+ cedulaBsqd;
+        String url = "https://sgo-central-6to.herokuapp.com/api/cedulaclientes/"+ cedulaBsqd;
             AndroidNetworking.get(url)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -180,8 +175,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     public void finalizarOrden(View view){
 
-       if(!id_cliente.equals("")){
+       if(isValidarCampos()){
            generarFactura(id_emp, id_cliente);
+       }
+       else{
+           Toast.makeText(this, "No se puede facturar, existen campos vacios", Toast.LENGTH_LONG).show();
        }
     }
 
@@ -195,7 +193,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         datos.put("fct_fch",date);
         JSONObject jsonData = new JSONObject(datos);
 
-        AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/facs")
+        AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/facs")
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -231,7 +229,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     }
 
     public void actualizarDetalle(String pedido){
-        String url = "https://safe-bastion-34410.herokuapp.com/api/acfacdetalles/" + pedido;
+        String url = "https://sgo-central-6to.herokuapp.com/api/acfacdetalles/" + pedido;
         Map<String,String> datos = new HashMap<>();
         datos.put("idFac",id_fact);
         JSONObject jsonData = new JSONObject(datos);
@@ -265,7 +263,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     }
 
     public void actualizarEstadoPedido(String pedido){
-        String url = "https://safe-bastion-34410.herokuapp.com/api/pedidos/" + pedido;
+        String url = "https://sgo-central-6to.herokuapp.com/api/pedidos/" + pedido;
         Map<String,String> datos = new HashMap<>();
         datos.put("ped_terminado","true");
         JSONObject jsonData = new JSONObject(datos);

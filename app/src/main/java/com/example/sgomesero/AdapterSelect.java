@@ -23,7 +23,7 @@ public class AdapterSelect extends BaseAdapter {
         inflater = (LayoutInflater)context.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
         int i,j;
     }
-    @Override
+    @Override// Se muestra el detalle del pedido
     public View getView(int i, View convertView, ViewGroup parent) {
         final View vista1 = inflater.inflate(R.layout.select_item,null);
         TextView cod = vista1.findViewById(R.id.txtview_codigo);
@@ -53,6 +53,7 @@ public class AdapterSelect extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+    //Suma el total de los platos en el pedido
     public Double Operacion(){
         int i,j;
         double  res = 0;

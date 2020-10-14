@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +56,6 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
 
-        Toast.makeText(this,"Id pedido: " + id_pedido,Toast.LENGTH_SHORT).show();
-
         subtitle.setText("Mesa " + mes_num);
 
 
@@ -102,11 +101,17 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     }
     //Ingresar Datos del Cliente
     public void datosFactura(View view){
-        Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
-        factura.putExtra("id_pedido",id_pedido);
-        factura.putExtra("id_emp",id_emp);
-        startActivity(factura);
-        finish();
+
+        if(!menu[0][0].equals("")) {
+            Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
+            factura.putExtra("id_pedido", id_pedido);
+            factura.putExtra("id_emp", id_emp);
+            startActivity(factura);
+            finish();
+        }else
+        {
+            Toast.makeText(this,"No hay platos disponibles",Toast.LENGTH_LONG).show();
+        }
     }
     //Se coloca en la matriz para poder mostrar los datos
     public void mostrarDetalle(){
@@ -122,7 +127,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     }
     //Buscar en la BDD el datalle de acuerdo al pedido
     public void buscarDetalle(){
-        String url = "http://safe-bastion-34410.herokuapp.com/api/platopedidos/"+id_pedido;
+        String url = "https://sgo-central-6to.herokuapp.com/api/platopedidos/"+id_pedido;
         if(!id_pedido.equals("")) {
             AndroidNetworking.get(url)
                     .setPriority(Priority.MEDIUM)
@@ -176,7 +181,6 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent activityLogin = new Intent(ActivityVerificarOrden.this, ActivityLogin.class);
                                 eliminaItemBDD(position);
                                 dialog.cancel();
                             }
@@ -198,7 +202,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     //Eliman los datos de la base de datos
     public void eliminaItemBDD(int position){
         String id = listIdDtall.get(position);
-        String url = "https://safe-bastion-34410.herokuapp.com/api/detalles/"+id;
+        String url = "https://sgo-central-6to.herokuapp.com/api/detalles/"+id;
 
         JSONObject jsonData = new JSONObject();
         AndroidNetworking.delete(url)

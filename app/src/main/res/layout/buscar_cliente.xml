@@ -20,7 +20,8 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/txt_ingrcedul"
-        android:inputType="number" />
+        android:inputType="number"
+        android:maxLength="10" />
 
     <TableRow
         android:layout_width="match_parent"

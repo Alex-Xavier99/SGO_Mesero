@@ -30,7 +30,7 @@ public class AdapterContador extends BaseAdapter {
 
     }
 
-    @Override
+    @Override//Se agrega el numero de platos que se va a pedir en la orden
     public View getView(final int i, View convertView, ViewGroup parent) {
 
         final View vista1 = inflater.inflate(R.layout.cont_select_orden_item,null);

@@ -47,7 +47,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     }
 
     public void consultarMesas(){
-        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas";
+        String url = "https://sgo-central-6to.herokuapp.com/api/mesas";
         AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -95,7 +95,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     }
 
     public void verificarEstadoMesa(){
-        String url = "https://safe-bastion-34410.herokuapp.com/api/mesas/" + mes_num;
+        String url = "https://sgo-central-6to.herokuapp.com/api/mesas/" + mes_num;
 
         AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
@@ -142,7 +142,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         datos.put("ped_fch",date);
         JSONObject jsonData = new JSONObject(datos);
 
-        AndroidNetworking.post("https://safe-bastion-34410.herokuapp.com/api/pedidos")
+        AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/pedidos")
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -164,7 +164,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivitySeleccionMesa.this, "Error2: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error21: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -181,7 +181,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     public  void onBackPressed(){
 
         AlertDialog.Builder alerta = new AlertDialog.Builder(ActivitySeleccionMesa.this);
-        alerta.setMessage("¿Desea cerrar cesión?")
+        alerta.setMessage("¿Desea cerrar sesión?")
                 .setCancelable(true)
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
@@ -199,7 +199,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                 });
 
         AlertDialog titulo = alerta.create();
-        titulo.setTitle("Cerrar cesión");
+        titulo.setTitle("Cerrar sesión");
         titulo.show();
 
     }
