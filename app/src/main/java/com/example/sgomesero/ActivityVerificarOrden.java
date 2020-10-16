@@ -3,6 +3,7 @@ package com.example.sgomesero;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,18 +24,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ActivityVerificarOrden extends AppCompatActivity {
+public class ActivityVerificarOrden extends AppCompatActivity implements DialogEliminarPlato.FinalizarCuadroDialogo {
 
     private TextView subtitle;
     private ListView list_orden;
     private TextView res_total;
     private  Double res;
-
+    //Almacena las variables de paso de parametros
     private String id_emp;
     private String mes_num;
     private String id_pedido;
 
+    //Lista de menu
     ArrayList<String> listIdDtall = new ArrayList<>();//Lista de id detalle
     ArrayList<String> listNomPlts = new ArrayList<>();//Lista de nombre platos
     ArrayList<String> listCantPlts = new ArrayList<>();//Lista de cantidad platos
@@ -42,7 +46,9 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     ArrayList<String> listvalorPlts = new ArrayList<>();//Lista de valor platos
 
     private String [][] menu;
-
+    //Contexto para cuadro de dialogo
+    Context contexto;
+    int posPlato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +57,20 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         setContentView(R.layout.activity_verificar_orden);
 
         subtitle = (TextView)findViewById(R.id.txtview_subtitle);
-
+        //Se almacena los parametros por el paso de actividades
         id_emp = getIntent().getStringExtra("id_emp");
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
-
+        //Se pasa el parametro del numero de mesa
         subtitle.setText("Mesa " + mes_num);
 
-
+        //Cast de listas
         list_orden = (ListView)findViewById(R.id.listview_ordenes);
         res_total = (TextView)findViewById(R.id.txtview_totalres);
         buscarDetalle();
         eliminarItemArrayMenu();
+
+        contexto = this;
 
     }
     //Se muestra un menu vacio en el caso de no existir datos en la BDD
@@ -82,6 +90,18 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         }else
             mostrarDetalle();
         presentarDatos();
+    }
+    //Se coloca en la matriz para poder mostrar los datos
+    public void mostrarDetalle(){
+        int i,j;
+        menu = new String[listIdDtall.size()][5];
+        for (i = 0; i < menu.length; i++) {
+            menu[i][0] = listIdDtall.get(i);
+            menu[i][1] = listNomPlts.get(i);
+            menu[i][2] = listCantPlts.get(i);
+            menu[i][3] = listpvpPlts.get(i);
+            menu[i][4] = listvalorPlts.get(i);
+        }
     }
     //Actualiza la lista en el caso de eliminar platos del menu
     public void presentarDatos(){
@@ -113,18 +133,7 @@ public class ActivityVerificarOrden extends AppCompatActivity {
             Toast.makeText(this,"No hay platos disponibles",Toast.LENGTH_LONG).show();
         }
     }
-    //Se coloca en la matriz para poder mostrar los datos
-    public void mostrarDetalle(){
-        int i,j;
-        menu = new String[listIdDtall.size()][5];
-            for (i = 0; i < menu.length; i++) {
-                menu[i][0] = listIdDtall.get(i);
-                menu[i][1] = listNomPlts.get(i);
-                menu[i][2] = listCantPlts.get(i);
-                menu[i][3] = listpvpPlts.get(i);
-                menu[i][4] = listvalorPlts.get(i);
-            }
-    }
+
     //Buscar en la BDD el datalle de acuerdo al pedido
     public void buscarDetalle(){
         String url = "https://sgo-central-6to.herokuapp.com/api/platopedidos/"+id_pedido;
@@ -175,29 +184,64 @@ public class ActivityVerificarOrden extends AppCompatActivity {
         list_orden.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long lon) {
-                AlertDialog.Builder alerta = new AlertDialog.Builder(ActivityVerificarOrden.this);
-                alerta.setMessage("¿Desea eliminar " + listNomPlts.get(position) + " ?")
-                        .setCancelable(true)
-                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                eliminaItemBDD(position);
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog titulo = alerta.create();
-                titulo.setTitle("Eliminar Plato");
-                titulo.show();
+                //Llamada al cuadro de dialogo
+                posPlato = position;
+                new DialogEliminarPlato(contexto, ActivityVerificarOrden.this,listNomPlts.get(position),listCantPlts.get(position));
             }
 
         });
+    }
+    //Resultados del Cudadro de diaogo
+    @Override
+    public void ResultadoCuadroDialog(String cant) {
+        int cantidad = Integer.parseInt(cant);
+        if(cantidad!=0){
+            actualizarDetalle(posPlato,cantidad);
+
+        }
+        else{
+            eliminaItemBDD(posPlato);
+        }
+
+    }
+
+    //Se actualiza la cantidad y el valor del detalle
+    public void actualizarDetalle(int posicion, int cantidad){
+
+        String id = listIdDtall.get(posicion);//Obtener el id del detalle
+        Double pvp = Double.parseDouble(listpvpPlts.get(posicion));// precio de venta
+        String total = String.valueOf(cantidad*pvp);// calcular el total
+
+        String url = "https://sgo-central-6to.herokuapp.com/api/detalles/" + id;
+        Map<String,String> datos = new HashMap<>();
+        //enviar datos a la BDD
+        datos.put("dtall_cant",String.valueOf(cantidad));
+        datos.put("dtall_valor",total);
+        JSONObject jsonData = new JSONObject(datos);
+
+        AndroidNetworking.patch(url)
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String mensaje = response.getString("message");
+                            Toast.makeText(ActivityVerificarOrden.this, mensaje, Toast.LENGTH_SHORT).show();
+                            VaciarListas();
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivityVerificarOrden.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivityVerificarOrden.this, "Error del servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     //Eliman los datos de la base de datos
     public void eliminaItemBDD(int position){
@@ -216,14 +260,8 @@ public class ActivityVerificarOrden extends AppCompatActivity {
 
                             String mensaje = response.getString("message");
                             Toast.makeText(ActivityVerificarOrden.this, mensaje, Toast.LENGTH_SHORT).show();
-                            //Se vacian las listas
-                            listIdDtall.clear();
-                            listNomPlts.clear();
-                            listCantPlts.clear();
-                            listpvpPlts.clear();
-                            listvalorPlts.clear();
-                            menu = null;
-                            buscarDetalle();
+
+                            VaciarListas();
                         } catch (JSONException e) {
                             Toast.makeText(ActivityVerificarOrden.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -236,6 +274,16 @@ public class ActivityVerificarOrden extends AppCompatActivity {
                 });
 
     }
+    public void VaciarListas(){
+        //Se vacian las listas
+        listIdDtall.clear();
+        listNomPlts.clear();
+        listCantPlts.clear();
+        listpvpPlts.clear();
+        listvalorPlts.clear();
+        menu = null;
+        buscarDetalle();
+    }
     @Override
     public  void onBackPressed(){
         finish();
@@ -244,14 +292,8 @@ public class ActivityVerificarOrden extends AppCompatActivity {
     @Override
     public  void onRestart(){
         super.onRestart();
-        //Se vacian las listas
-        listIdDtall.clear();
-        listNomPlts.clear();
-        listCantPlts.clear();
-        listpvpPlts.clear();
-        listvalorPlts.clear();
-        menu = null;
-
-        buscarDetalle();
+        VaciarListas();
     }
+
+
 }

@@ -14,14 +14,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        int m = 1000;
         //Método que retrasa m milisegundos el paso del siguiente activity
         new Handler().postDelayed(new Runnable() {
 
             public void run() {
                     IrSguienteActivity();
             }
-        }, 1000);
+        }, m);
 
     }
 

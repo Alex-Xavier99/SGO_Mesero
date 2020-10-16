@@ -2,7 +2,6 @@ package com.example.sgomesero;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,11 +19,13 @@ public class DialogBuscarCliente {
         dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogo.setCancelable(false);
         dialogo.setContentView(R.layout.buscar_cliente);
-
+        dialogo.getWindow().setLayout(850,500);
+        //Cast de objetos
         final EditText cedula = (EditText) dialogo.findViewById(R.id.txtedit_cedula);
-        Button btnbuscar = (Button) dialogo.findViewById(R.id.btn_buscar);
+        Button btnbuscar = (Button) dialogo.findViewById(R.id.btn_Aceptar);
         Button btncancerlar = (Button) dialogo.findViewById(R.id.btn_cancelar);
 
+        //Al presionar el boton buscar
         btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

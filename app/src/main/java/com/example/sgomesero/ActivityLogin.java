@@ -27,7 +27,7 @@ public class ActivityLogin extends AppCompatActivity {
     EditText txt_user;
     EditText txt_pasw;
 
-    //Variable para enviar al siguiente activity
+    //Variable (id empleado) para enviar al siguiente activity
     private String id_emp;
 
     final LoadingDialog loadingDialog = new LoadingDialog(ActivityLogin.this);
@@ -37,7 +37,7 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Cas de los elementos para usuario y contraseña en el Layout
+        //Cast de los elementos para usuario y contraseña en el Layout
         txt_user = (EditText)findViewById(R.id.editTextUsuer);
         txt_pasw = (EditText)findViewById(R.id.editTextPassword);
 

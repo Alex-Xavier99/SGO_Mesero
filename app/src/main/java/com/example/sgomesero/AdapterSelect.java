@@ -31,7 +31,7 @@ public class AdapterSelect extends BaseAdapter {
         TextView cant = vista1.findViewById(R.id.txtplain_cant);
         TextView vunit = vista1.findViewById(R.id.txtview_vunit);
         TextView total = vista1.findViewById(R.id.txtview_total);
-
+        //Se envia los datos a la ActivityVerificarOrden
         cod.setText(datos[i][0]);
         ordn.setText(datos[i][1]);
         cant.setText(datos[i][2]);
