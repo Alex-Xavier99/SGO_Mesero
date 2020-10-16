@@ -68,4 +68,6 @@
     <string name="txt_num">0</string>
     <string name="btn_menos">-</string>
 
+    <string name="Txt_TitleModiicar">Modificar la Cantidad</string>
+
 </resources>

@@ -27,19 +27,21 @@ import java.util.Map;
 
 public class ActivitySeleccionMesa extends AppCompatActivity {
 
-    private Spinner spin;
-    private String [] cadspin;
-    private String id_emp;
-    private String mes_num;
-    private String id_pedido;
+    private Spinner spin;//Sirve para presentar las mesas del restaurante
+    private String [] cadspin;//Arreglo con las mesas
+    private String id_emp;//id empleado
+    private String mes_num;// numero de mesa
+    private String id_pedido;// id pedido
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccion_mesa);
+        //Cast spinner
         spin = (Spinner)findViewById(R.id.spin_selectmesa);
-
+        //Variable (id empleado) para enviar al siguiente activity
         id_emp = getIntent().getStringExtra("id_emp");
+        //Variables para el número de mesa y el id pedido
         mes_num = "";
         id_pedido = "";
 
@@ -59,6 +61,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                             if(respuesta.equals("200")){
                                 JSONArray arrayPlatos = response.getJSONArray("data");
                                 cadspin = new String[arrayPlatos.length()];
+                                //Llenar el arreglo con el numero de mesas
                                 for(int i=0;i<arrayPlatos.length();i++){
                                     JSONObject jsonProducto = arrayPlatos.getJSONObject(i);
                                     String id = jsonProducto.getString("id");
@@ -69,13 +72,13 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                                 Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error de la Solicitud: "+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivitySeleccionMesa.this, "Error2: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error de Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -120,13 +123,13 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
-                            Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivitySeleccionMesa.this, "Error de la Solicitud: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivitySeleccionMesa.this, "Error: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySeleccionMesa.this, "Error de Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

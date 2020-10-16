@@ -4,12 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterContador extends BaseAdapter {
@@ -34,7 +32,8 @@ public class AdapterContador extends BaseAdapter {
     public View getView(final int i, View convertView, ViewGroup parent) {
 
         final View vista1 = inflater.inflate(R.layout.cont_select_orden_item,null);
-        TextView plto = vista1.findViewById(R.id.txt_plato);
+
+        TextView plto = vista1.findViewById(R.id.Txt_plato);
         TextView dscrp = vista1.findViewById(R.id.txtview_descrip);
         final TextView num = vista1.findViewById(R.id.txtview_num);
         Button btnmenos = vista1.findViewById(R.id.btn_menos);

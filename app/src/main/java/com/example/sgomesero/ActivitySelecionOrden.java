@@ -24,14 +24,17 @@ import java.util.Map;
 public class ActivitySelecionOrden extends AppCompatActivity {
 
     private ListView listViewPlts; // Variable lista de platos
-
+    //Listas
     ArrayList<String> selcItm = new ArrayList<>();
     ArrayList<String> adptlistPlts = new ArrayList<String>();// Lista de Platos
     ArrayList<String> adptlistDscrpPlts = new ArrayList<String>(); //lista descripcion
     ArrayList<String> listpvpPlts =  new ArrayList<String>(); //Lista pvp paltos
     ArrayList<String> listIdPlts =  new ArrayList<String>(); //Lista id platos
+    //Menu contiene el detalle del pedido
     String[][] menu;
+    //Variables para el paso de parametros
     String TpOrden,url,id_pedido,id_emp;
+    //Adaptador de vista
     AdapterContador viewPltsCont ;
     int tmnmenu;
     int[] cantidad;
@@ -44,46 +47,20 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
         listViewPlts = (ListView)findViewById(R.id.list_ordenes);
         listIdPlts = new ArrayList<String>();//Lista codigo de platos
-        TpOrden = getIntent().getExtras().getString("TpOrden");
 
+        //Almacenamos las variables del paso de activitys
+        TpOrden = getIntent().getExtras().getString("TpOrden");
         id_pedido = getIntent().getExtras().getString("id_pedido");
         id_emp = getIntent().getExtras().getString("id_emp");
 
         presentarPlts();
+        //Comprobamos si la variable no es vacia o nula para poder enviar la url
         if(!TpOrden.isEmpty() && !TpOrden.equals(null))
         {
             url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
         }
         else
             Toast.makeText(this,"No se encuentran Registros"+TpOrden,Toast.LENGTH_LONG).show();
-        /*switch(TpOrden){
-            case "Aperitivo":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Sopa":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Plato_Fuerte":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Ensalada":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Marisco":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Bebida":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Postre":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            case "Promoción":
-                url = "https://sgo-central-6to.herokuapp.com/api/tipoplatos/"+TpOrden;
-                break;
-            default:
-                Toast.makeText(this,"No se encuentran Registros"+TpOrden,Toast.LENGTH_LONG).show();
-        }*/
 
         AndroidNetworking.get(url)
                 .setPriority(Priority.MEDIUM)
@@ -97,11 +74,12 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                                 JSONArray arrayPlatos = response.getJSONArray("data");
                                 for(int i=0;i<arrayPlatos.length();i++){
                                     JSONObject jsonProducto = arrayPlatos.getJSONObject(i);
+                                    
                                     String IdPlato = jsonProducto.getString("id");
                                     String nombrePlato = jsonProducto.getString("plt_nom");
                                     String DscrpPlato = jsonProducto.getString("plt_des");
                                     String pvpPlato = jsonProducto.getString("plt_pvp");
-
+                                    //Ingresar los datos en las listas
                                     listIdPlts.add(IdPlato);///Lista ID
                                     adptlistPlts.add(nombrePlato);//Lista Plato
                                     adptlistDscrpPlts.add(DscrpPlato);//Lista descripcion plato
@@ -120,7 +98,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivitySelecionOrden.this, "Error: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivitySelecionOrden.this, "Error de Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

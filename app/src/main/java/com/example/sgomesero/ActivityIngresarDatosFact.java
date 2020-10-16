@@ -2,7 +2,6 @@ package com.example.sgomesero;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,8 +46,9 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         direccion = (EditText)findViewById(R.id.txt_direccion);//Servira para leer los datos ingresados de la direccion
         telefono = (EditText)findViewById(R.id.txt_telefono);//Servira para leer los datos del telefono
         correo = (EditText)findViewById(R.id.txt_correo);//Servira para leer los datos del correo
-        btnBuscar = (Button)findViewById(R.id.btn_buscar);
+        btnBuscar = (Button)findViewById(R.id.btn_Aceptar);
 
+        //Se almacena el paso de parametros
         id_emp = getIntent().getStringExtra("id_emp");
         id_pedido = getIntent().getStringExtra("id_pedido");
         id_cliente = "";
@@ -125,10 +124,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                 !telefono.getText().toString().trim().isEmpty() &&
                 !correo.getText().toString().trim().isEmpty();
     }
-    @Override
+    @Override // Recibe la cedula del cliente buscado
     public void ResultadoCuadroDialogo(String cedulacliente) {
         bucarCliente(cedulacliente);
     }
+    //Se busca al cliente en la BDD
     public void bucarCliente(final String cedulaBsqd){
 
         if(!cedulaBsqd.equals("")) {
@@ -172,7 +172,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                     });
         }
     }
-
+    //Con el boton Facturar finalizamos la orden
     public void finalizarOrden(View view){
 
        if(isValidarCampos()){
@@ -182,7 +182,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
            Toast.makeText(this, "No se puede facturar, existen campos vacios", Toast.LENGTH_LONG).show();
        }
     }
-
+    //Generamos la fatura
     public void generarFactura(String empleado, String cliente){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
@@ -214,7 +214,6 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                                 }
                             }
 
-
                         } catch (JSONException e) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -227,7 +226,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                 });
 
     }
-
+    //Se actualiza el detalle de la factura
     public void actualizarDetalle(String pedido){
         String url = "https://sgo-central-6to.herokuapp.com/api/acfacdetalles/" + pedido;
         Map<String,String> datos = new HashMap<>();
@@ -261,7 +260,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                     }
                 });
     }
-
+    //Se actualiza el estado del pedido
     public void actualizarEstadoPedido(String pedido){
         String url = "https://sgo-central-6to.herokuapp.com/api/pedidos/" + pedido;
         Map<String,String> datos = new HashMap<>();

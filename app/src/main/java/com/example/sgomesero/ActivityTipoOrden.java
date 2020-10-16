@@ -20,7 +20,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo_orden);
-
+        //Cast ImageButton
         imgaperitivo = (ImageButton)findViewById(R.id.img_aperitivo);
         imgsopa = (ImageButton)findViewById(R.id.img_sopa);
         imgfuerte = (ImageButton)findViewById(R.id.img_fuerte);
@@ -63,6 +63,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
 
     public void SeleccionarOrden(String TipoOrden){
         Intent selectorden = new Intent(this, ActivitySelecionOrden.class);
+        //Paso de parametros Tipo de orden, id empleado, id pedido
         selectorden.putExtra("TpOrden",TipoOrden);
         selectorden.putExtra("id_emp", id_emp);
         selectorden.putExtra("id_pedido",id_pedido);
