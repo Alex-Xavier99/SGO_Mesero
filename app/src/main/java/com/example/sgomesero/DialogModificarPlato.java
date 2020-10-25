@@ -7,23 +7,23 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class DialogEliminarPlato {
+public class DialogModificarPlato {
     public interface FinalizarCuadroDialogo{
-        void ResultadoCuadroDialog(String cant);
+        void ResultadoCuadroDialogModificar(String cant);
     }
      private FinalizarCuadroDialogo interfaz;
      String plato;
      int cant;
 
-    public DialogEliminarPlato(Context contexto, FinalizarCuadroDialogo actividad, String NomPlato, final String Cantidad ){
+    public DialogModificarPlato(Context contexto, FinalizarCuadroDialogo actividad, String NomPlato, final String Cantidad ){
         interfaz = actividad;
         plato = NomPlato;
         cant = Integer.parseInt(Cantidad);
         final Dialog dialogo = new Dialog(contexto);
         dialogo.requestWindowFeature((Window.FEATURE_NO_TITLE));
         dialogo.setCancelable(false);
-        dialogo.setContentView((R.layout.dialog_eliminar_plato));
-        dialogo.getWindow().setLayout(950,840);
+        dialogo.setContentView((R.layout.dialog_modificar_plato));
+        dialogo.getWindow().setLayout(950,740);
 
         //Casat los objetos de la activity
         TextView pregunta = (TextView) dialogo.findViewById(R.id.Txt_VievPreguntar);
@@ -33,14 +33,14 @@ public class DialogEliminarPlato {
         Button btnaceptar = (Button) dialogo.findViewById(R.id.btn_AceptarPlt);
         Button btncancelar = (Button) dialogo.findViewById(R.id.btn_cancelar);
         //Presentar Datos
-        pregunta.setText("¿Cuántos "+plato+" desea?");
+        pregunta.setText(plato);
         num.setText(Cantidad);
 
         //Boton Aceptar
         btnaceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                interfaz.ResultadoCuadroDialog(String.valueOf(cant));
+                interfaz.ResultadoCuadroDialogModificar(String.valueOf(cant));
                 dialogo.dismiss();
             }
         });

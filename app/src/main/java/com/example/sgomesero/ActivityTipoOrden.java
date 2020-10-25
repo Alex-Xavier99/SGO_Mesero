@@ -58,7 +58,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
         SeleccionarOrden("Postre");
     }
     public void Promociones(View view){
-        SeleccionarOrden("Promoción");
+        SeleccionarOrden("promocion");
     }
 
     public void SeleccionarOrden(String TipoOrden){

@@ -19,7 +19,8 @@ public class DialogBuscarCliente {
         dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogo.setCancelable(false);
         dialogo.setContentView(R.layout.buscar_cliente);
-        dialogo.getWindow().setLayout(850,500);
+        dialogo.getWindow().setLayout(950,500);
+        //dialogo.setCanceledOnTouchOutside(true);
         //Cast de objetos
         final EditText cedula = (EditText) dialogo.findViewById(R.id.txtedit_cedula);
         Button btnbuscar = (Button) dialogo.findViewById(R.id.btn_Aceptar);
@@ -37,7 +38,7 @@ public class DialogBuscarCliente {
             }
         });
 
-        btncancerlar.setOnClickListener(new View.OnClickListener() {
+       btncancerlar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogo.dismiss();

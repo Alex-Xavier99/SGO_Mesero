@@ -74,16 +74,18 @@ public class ActivitySelecionOrden extends AppCompatActivity {
                                 JSONArray arrayPlatos = response.getJSONArray("data");
                                 for(int i=0;i<arrayPlatos.length();i++){
                                     JSONObject jsonProducto = arrayPlatos.getJSONObject(i);
-                                    
-                                    String IdPlato = jsonProducto.getString("id");
-                                    String nombrePlato = jsonProducto.getString("plt_nom");
-                                    String DscrpPlato = jsonProducto.getString("plt_des");
-                                    String pvpPlato = jsonProducto.getString("plt_pvp");
-                                    //Ingresar los datos en las listas
-                                    listIdPlts.add(IdPlato);///Lista ID
-                                    adptlistPlts.add(nombrePlato);//Lista Plato
-                                    adptlistDscrpPlts.add(DscrpPlato);//Lista descripcion plato
-                                    listpvpPlts.add(pvpPlato);//Lista precio
+                                    String visible = jsonProducto.getString("plt_visbl");
+                                    if(visible.equals("true")) {
+                                        String IdPlato = jsonProducto.getString("id");
+                                        String nombrePlato = jsonProducto.getString("plt_nom");
+                                        String DscrpPlato = jsonProducto.getString("plt_des");
+                                        String pvpPlato = jsonProducto.getString("plt_pvp");
+                                        //Ingresar los datos en las listas
+                                        listIdPlts.add(IdPlato);///Lista ID
+                                        adptlistPlts.add(nombrePlato);//Lista Plato
+                                        adptlistDscrpPlts.add(DscrpPlato);//Lista descripcion plato
+                                        listpvpPlts.add(pvpPlato);//Lista precio
+                                    }
 
                                 }
                                 presentarPlts();
