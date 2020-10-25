@@ -35,6 +35,7 @@
     <string name="txt_ingrcedul">Ingresar Cédula</string>
     <string name="btn_busca">Buscar</string>
     <string name="btn_cancelar">Cancelar</string>
+    <string name="Btn_Consumidor">Consumidor Final</string>
 
 
     <string name="txt_title3">Categoria</string>
@@ -63,11 +64,20 @@
 
     <string name="txt_title5">Seleccionar Orden</string>
 
+    #Activity seleccionar orden
     <string name="txt_plato">plato</string>
     <string name="btn_mas">+</string>
     <string name="txt_num">0</string>
     <string name="btn_menos">-</string>
 
+    #Cuadro de dialogo Modificar plato
     <string name="Txt_TitleModiicar">Modificar la Cantidad</string>
+
+    #Cuadro de dialogo select plato
+    <string name="Txt_TitleOp">Opciones</string>
+    <string name="Txt_SPplato">Plato</string>
+    <string name="Btn_SPModificar">Modificar Cantidad</string>
+    <string name="Btn_SPEliminar">Eliminar Plato</string>
+
 
 </resources>

@@ -226,6 +226,12 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                 });
 
     }
+
+    //Boton del consumidor final (Se busca en la base de datos la cedula 999999999)
+    public  void ConsumidorFinal(View view){
+        bucarCliente("9999999999");
+    }
+
     //Se actualiza el detalle de la factura
     public void actualizarDetalle(String pedido){
         String url = "https://sgo-central-6to.herokuapp.com/api/acfacdetalles/" + pedido;
@@ -245,7 +251,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                             String mensaje = response.getString("message");
                             Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
                             if(!id_emp.equals("")) {
-                                actualizarEstadoPedido(id_pedido);
+                                String cdlTemp = cedula.getText().toString();
+                                if(cdlTemp.equals("9999999999"))
+                                    actualizarEstadoPedido(id_pedido, true);
+                                else
+                                    actualizarEstadoPedido(id_pedido, false);
                                 finish();
                             }
 
@@ -261,10 +271,11 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                 });
     }
     //Se actualiza el estado del pedido
-    public void actualizarEstadoPedido(String pedido){
+    public void actualizarEstadoPedido(String pedido, boolean estado){
         String url = "https://sgo-central-6to.herokuapp.com/api/pedidos/" + pedido;
         Map<String,String> datos = new HashMap<>();
-        datos.put("ped_terminado","true");
+
+        datos.put("ped_terminado", String.valueOf(estado));
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.patch(url)

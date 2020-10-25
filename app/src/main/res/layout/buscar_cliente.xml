@@ -28,10 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <Button
             android:id="@+id/btn_Aceptar"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_busca" />
@@ -39,10 +40,11 @@
         <Button
             android:id="@+id/btn_cancelar"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_cancelar" />
+
     </TableRow>
 
 </LinearLayout>

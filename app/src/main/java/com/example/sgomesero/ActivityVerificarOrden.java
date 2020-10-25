@@ -1,15 +1,12 @@
 package com.example.sgomesero;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityVerificarOrden extends AppCompatActivity implements DialogEliminarPlato.FinalizarCuadroDialogo {
+public class ActivityVerificarOrden extends AppCompatActivity implements DialogModificarPlato.FinalizarCuadroDialogo, DialogSelectPlato.FinalizarCuadroDialogo {
 
     private TextView subtitle;
     private ListView list_orden;
@@ -186,23 +183,27 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogE
             public void onItemClick(AdapterView<?> parent, View view, final int position, long lon) {
                 //Llamada al cuadro de dialogo
                 posPlato = position;
-                new DialogEliminarPlato(contexto, ActivityVerificarOrden.this,listNomPlts.get(position),listCantPlts.get(position));
+                new DialogSelectPlato(contexto, ActivityVerificarOrden.this,listNomPlts.get(posPlato));
             }
 
         });
     }
-    //Resultados del Cudadro de diaogo
+    //Resultados del cuadro de dialogo Select Plato
     @Override
-    public void ResultadoCuadroDialog(String cant) {
+    public void ResultadoCuadroDialogSelectPlato(Boolean Modificar) {
+        if(Modificar.equals(true))
+            new DialogModificarPlato(contexto, ActivityVerificarOrden.this,listNomPlts.get(posPlato),listCantPlts.get(posPlato));
+        else
+            eliminaItemBDD(posPlato);
+    }
+
+    //Resultados del Cudadro de dialogo Modificar
+    @Override
+    public void ResultadoCuadroDialogModificar(String cant) {
         int cantidad = Integer.parseInt(cant);
         if(cantidad!=0){
             actualizarDetalle(posPlato,cantidad);
-
         }
-        else{
-            eliminaItemBDD(posPlato);
-        }
-
     }
 
     //Se actualiza la cantidad y el valor del detalle
@@ -294,6 +295,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogE
         super.onRestart();
         VaciarListas();
     }
+
 
 
 }
