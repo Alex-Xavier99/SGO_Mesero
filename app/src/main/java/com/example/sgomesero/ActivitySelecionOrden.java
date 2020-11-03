@@ -38,6 +38,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
     AdapterContador viewPltsCont ;
     int tmnmenu;
     int[] cantidad;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         TpOrden = getIntent().getExtras().getString("TpOrden");
         id_pedido = getIntent().getExtras().getString("id_pedido");
         id_emp = getIntent().getExtras().getString("id_emp");
+        token = getIntent().getStringExtra("token");
 
         presentarPlts();
         //Comprobamos si la variable no es vacia o nula para poder enviar la url
@@ -63,6 +65,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
             Toast.makeText(this,"No se encuentran Registros"+TpOrden,Toast.LENGTH_LONG).show();
 
         AndroidNetworking.get(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -141,7 +145,7 @@ public class ActivitySelecionOrden extends AppCompatActivity {
             public void run() {
                 finish();
             }
-        }, 500);
+        }, 600);
 
 
     }
@@ -169,6 +173,8 @@ public class ActivitySelecionOrden extends AppCompatActivity {
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/detalles")
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()

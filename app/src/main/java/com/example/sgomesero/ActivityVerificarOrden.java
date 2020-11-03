@@ -34,6 +34,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
     private String id_emp;
     private String mes_num;
     private String id_pedido;
+    private String token;
 
     //Lista de menu
     ArrayList<String> listIdDtall = new ArrayList<>();//Lista de id detalle
@@ -58,6 +59,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         id_emp = getIntent().getStringExtra("id_emp");
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
+        token = getIntent().getStringExtra("token");
         //Se pasa el parametro del numero de mesa
         subtitle.setText("Mesa " + mes_num);
 
@@ -114,6 +116,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         Intent tipoOrden = new Intent(this, ActivityTipoOrden.class);
         tipoOrden.putExtra("id_pedido",id_pedido);
         tipoOrden.putExtra("id_emp",id_emp);
+        tipoOrden.putExtra("token", token);
         startActivity(tipoOrden);
     }
     //Ingresar Datos del Cliente
@@ -123,6 +126,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
             Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
             factura.putExtra("id_pedido", id_pedido);
             factura.putExtra("id_emp", id_emp);
+            factura.putExtra("token", token);
             startActivity(factura);
             finish();
         }else
@@ -136,6 +140,8 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         String url = "https://sgo-central-6to.herokuapp.com/api/platopedidos/"+id_pedido;
         if(!id_pedido.equals("")) {
             AndroidNetworking.get(url)
+                    .addHeaders("Content-type","application/json")
+                    .addHeaders("Authorization",token)
                     .setPriority(Priority.MEDIUM)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
@@ -221,6 +227,8 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.patch(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -251,6 +259,8 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
 
         JSONObject jsonData = new JSONObject();
         AndroidNetworking.delete(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()

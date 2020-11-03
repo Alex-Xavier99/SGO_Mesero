@@ -28,7 +28,7 @@ public class ActivityLogin extends AppCompatActivity {
     EditText txt_pasw;
 
     //Variable (id empleado) para enviar al siguiente activity
-    private String id_emp;
+    private String id_emp,tkn;
 
     final LoadingDialog loadingDialog = new LoadingDialog(ActivityLogin.this);
 
@@ -42,6 +42,8 @@ public class ActivityLogin extends AppCompatActivity {
         txt_pasw = (EditText)findViewById(R.id.editTextPassword);
 
         id_emp = "";
+        tkn="";
+
     }
 
 
@@ -62,9 +64,10 @@ public class ActivityLogin extends AppCompatActivity {
 
                                 String mensaje = response.getString("message");
                                 Toast.makeText(ActivityLogin.this, mensaje, Toast.LENGTH_SHORT).show();
-
+                                JSONObject jsontoken = response.getJSONObject("data");
                                 if(mensaje.equals("Bienvenido")){
                                     id_emp = response.getString("empleado");
+                                    tkn = jsontoken.getString("token");
                                     siguienteActivity();
                                 }
                             } catch (JSONException e) {
@@ -106,7 +109,10 @@ public class ActivityLogin extends AppCompatActivity {
 
     public void siguienteActivity(){
         Intent actSelMes = new Intent(this, ActivitySeleccionMesa.class);
+        //Pasar parametros id empleado y token
+        String token = "Bearer "+tkn;//Se concatena el token con Bearer para la autorizacion
         actSelMes.putExtra("id_emp", id_emp);
+        actSelMes.putExtra("token", token);
         startActivity(actSelMes);
         finish();
         loadingDialog.dismissDialog();
