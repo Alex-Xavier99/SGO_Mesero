@@ -15,6 +15,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
     private String id_emp;
     private String mes_num;
     private String id_pedido;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
         id_emp = getIntent().getStringExtra("id_emp");
         mes_num = getIntent().getStringExtra("mes_num");
         id_pedido = getIntent().getStringExtra("id_pedido");
+        token = getIntent().getStringExtra("token");
     }
 
     //Siguiente activity Verficar Orden
@@ -67,6 +69,7 @@ public class ActivityTipoOrden extends AppCompatActivity {
         selectorden.putExtra("TpOrden",TipoOrden);
         selectorden.putExtra("id_emp", id_emp);
         selectorden.putExtra("id_pedido",id_pedido);
+        selectorden.putExtra("token", token);
         startActivity(selectorden);
         finish();
     }

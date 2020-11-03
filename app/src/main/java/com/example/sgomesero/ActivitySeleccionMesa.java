@@ -31,6 +31,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     private String [] cadspin;//Arreglo con las mesas
     private String id_emp;//id empleado
     private String mes_num;// numero de mesa
+    private String token;
     private String id_pedido;// id pedido
 
     @Override
@@ -41,6 +42,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         spin = (Spinner)findViewById(R.id.spin_selectmesa);
         //Variable (id empleado) para enviar al siguiente activity
         id_emp = getIntent().getStringExtra("id_emp");
+        token = getIntent().getStringExtra("token");
         //Variables para el número de mesa y el id pedido
         mes_num = "";
         id_pedido = "";
@@ -49,8 +51,11 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     }
 
     public void consultarMesas(){
+
         String url = "https://sgo-central-6to.herokuapp.com/api/mesas";
         AndroidNetworking.get(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -101,6 +106,8 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         String url = "https://sgo-central-6to.herokuapp.com/api/mesas/" + mes_num;
 
         AndroidNetworking.get(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -146,6 +153,8 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/pedidos")
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -177,6 +186,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         verificarorden.putExtra("id_emp", id_emp);
         verificarorden.putExtra("mes_num", mes_num);
         verificarorden.putExtra("id_pedido",id_pedido);
+        verificarorden.putExtra("token", token);
         startActivity(verificarorden);
     }
 

@@ -34,6 +34,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     private String id_cliente;
     private String id_fact;
+    private String token;
     DialogBuscarCliente dialogo;
 
     @Override
@@ -51,6 +52,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         //Se almacena el paso de parametros
         id_emp = getIntent().getStringExtra("id_emp");
         id_pedido = getIntent().getStringExtra("id_pedido");
+        token = getIntent().getStringExtra("token");
         id_cliente = "";
         id_fact = "";
 
@@ -86,6 +88,8 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
             JSONObject jsonData = new JSONObject(datos);
 
             AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/clientes")
+                    .addHeaders("Content-type","application/json")
+                    .addHeaders("Authorization",token)
                     .addJSONObjectBody(jsonData)
                     .setPriority(Priority.MEDIUM)
                     .build()
@@ -134,6 +138,8 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         if(!cedulaBsqd.equals("")) {
         String url = "https://sgo-central-6to.herokuapp.com/api/cedulaclientes/"+ cedulaBsqd;
             AndroidNetworking.get(url)
+                    .addHeaders("Content-type","application/json")
+                    .addHeaders("Authorization",token)
                     .setPriority(Priority.MEDIUM)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
@@ -194,6 +200,8 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.post("https://sgo-central-6to.herokuapp.com/api/facs")
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -240,6 +248,8 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.patch(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -279,6 +289,8 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
         JSONObject jsonData = new JSONObject(datos);
 
         AndroidNetworking.patch(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
                 .addJSONObjectBody(jsonData)
                 .setPriority(Priority.MEDIUM)
                 .build()
