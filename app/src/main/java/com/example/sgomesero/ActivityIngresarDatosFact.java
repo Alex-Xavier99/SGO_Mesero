@@ -37,6 +37,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     private String token;
     DialogBuscarCliente dialogo;
 
+    final LoadingDialog loadingDialog = new LoadingDialog(ActivityIngresarDatosFact.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     }
 
     public void CrearCliente(View view){
+        loadingDialog.startLoadingDialog();
         ingresarCliente();
     }
 
@@ -105,19 +107,23 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                                     JSONObject datos = response.getJSONObject("data");
                                     id_cliente = datos.getString("id");
                                 }
+                                loadingDialog.dismissDialog();
 
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                loadingDialog.dismissDialog();
                             }
                         }
 
                         @Override
                         public void onError(ANError anError) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     });
         }else{
             Toast.makeText(this, "No se puede insertar un cliente si existen campos vacios", Toast.LENGTH_SHORT).show();
+            loadingDialog.dismissDialog();
         }
     }
 
@@ -130,6 +136,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     }
     @Override // Recibe la cedula del cliente buscado
     public void ResultadoCuadroDialogo(String cedulacliente) {
+        loadingDialog.startLoadingDialog();
         bucarCliente(cedulacliente);
     }
     //Se busca al cliente en la BDD
@@ -165,23 +172,29 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
                                 } else {
                                     Toast.makeText(ActivityIngresarDatosFact.this, "No se ha registrado el cliente.", Toast.LENGTH_LONG).show();
+
                                 }
+                                loadingDialog.dismissDialog();
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityIngresarDatosFact.this, "Error1: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                loadingDialog.dismissDialog();
                             }
                         }
 
                         @Override
                         public void onError(ANError anError) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error2: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     });
         }
+        loadingDialog.dismissDialog();
     }
     //Con el boton Facturar finalizamos la orden
     public void finalizarOrden(View view){
 
        if(isValidarCampos()){
+           loadingDialog.startLoadingDialog();
            generarFactura(id_emp, id_cliente);
        }
        else{
@@ -221,15 +234,17 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
                                 }
                             }
-
+                            loadingDialog.dismissDialog();
                         } catch (JSONException e) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Toast.makeText(ActivityIngresarDatosFact.this, "ErrorFacs: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
                     }
                 });
 
@@ -237,6 +252,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
     //Boton del consumidor final (Se busca en la base de datos la cedula 999999999)
     public  void ConsumidorFinal(View view){
+        loadingDialog.startLoadingDialog();
         bucarCliente("9999999999");
     }
 
@@ -262,21 +278,31 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                             Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
                             if(!id_emp.equals("")) {
                                 String cdlTemp = cedula.getText().toString();
-                                if(cdlTemp.equals("9999999999"))
-                                    actualizarEstadoPedido(id_pedido, true);
-                                else
-                                    actualizarEstadoPedido(id_pedido, false);
-                                finish();
-                            }
 
+                                /*if(cdlTemp.equals("9999999999")) {
+                                    loadingDialog.startLoadingDialog();
+                                    actualizarEstadoPedido(id_pedido, true);
+                                }
+                                else {
+                                    loadingDialog.startLoadingDialog();
+                                    actualizarEstadoPedido(id_pedido, false);
+                                }*/
+                                loadingDialog.startLoadingDialog();
+                                actualizarEstadoPedido(id_pedido, false);
+                                finish();
+                                loadingDialog.dismissDialog();
+                            }
+                            loadingDialog.dismissDialog();
                         } catch (JSONException e) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Toast.makeText(ActivityIngresarDatosFact.this, "ErrorDet: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
                     }
                 });
     }
@@ -301,15 +327,18 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
 
                             String mensaje = response.getString("message");
                             Toast.makeText(ActivityIngresarDatosFact.this, mensaje, Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
 
                         } catch (JSONException e) {
                             Toast.makeText(ActivityIngresarDatosFact.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Toast.makeText(ActivityIngresarDatosFact.this, "ErrorPed: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
                     }
                 });
     }

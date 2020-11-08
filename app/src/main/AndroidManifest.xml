@@ -11,19 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivitySelecionOrden"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ActivityVerificarOrden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ActivityLogin"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ActivityTipoOrden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ActivityIngresarDatosFact"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ActivitySeleccionMesa"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".ActivityVerificarOrdenSegCuenta"></activity>
+        <activity
+            android:name=".ActivitySelecionOrden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityVerificarOrden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityTipoOrden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityIngresarDatosFact"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivitySeleccionMesa"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

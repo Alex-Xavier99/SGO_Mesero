@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityVerificarOrden">
+    tools:context=".ActivityVerificarOrdenSegCuenta">
 
     <TextView
         android:id="@+id/txtview_title"
@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:text="@string/txt_title4"
+        android:text="@string/Txt_TitleOrdn"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -153,34 +153,22 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btn_agregar"
+
+            android:id="@+id/Btn_AgregarPlt"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="agregarOrden"
-            android:text="@string/btn_agregar"
-            android:textSize="13sp" />
+            android:layout_height="wrap_content"
+            android:onClick="agregarPlatoCnta"
+            android:text="@string/btn_agregar" />
 
         <Button
-            android:id="@+id/btn_factura"
+
+            android:id="@+id/Btn_FactCuenta"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:onClick="datosFactura"
-            android:text="@string/btn_finali"
-            android:textSize="13sp" />
-
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="verSegundaOrden"
-            android:text="@string/btn_VerCntaDos"
-            android:textSize="13sp" />
+            android:text="@string/btn_finali" />
     </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
