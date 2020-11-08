@@ -49,11 +49,12 @@
     <string name="txt_promociones">Promociones</string>
     <string name="textview">TextView</string>
     <string name="btn_fact">Facturar</string>
-
+    //Activity Verificar Orden
     <string name="txt_title4">Verificar Orden</string>
     <string name="btn_agregar">Agregar Plato</string>
     <string name="btn_confirm">Confirmar</string>
     <string name="btn_finali">Facturar</string>
+    <string name="btn_VerCntaDos">Ver Segunda Cuenta</string>
     <string name="btn_DatosFact">Ingresar Datos Facturación</string>
     <string name="txt_cod">Cod</string>
     <string name="txt_descrip">Descripción</string>
@@ -78,6 +79,12 @@
     <string name="Txt_SPplato">Plato</string>
     <string name="Btn_SPModificar">Modificar Cantidad</string>
     <string name="Btn_SPEliminar">Eliminar Plato</string>
+    <string name="Btn_DividirCnta">Añadir a factura</string>
 
+    #Cuadro de dialogo cantidad a facturar
+    <string name="Txt_CantFact">Cantidad a facturar</string>
+
+    #Cuadro de dialogo cantidad a facturar
+    <string name="Txt_TitleOrdn">Verificar Orden de Cuenta</string>
 
 </resources>

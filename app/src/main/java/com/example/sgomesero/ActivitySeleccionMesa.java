@@ -32,7 +32,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     private String id_emp;//id empleado
     private String mes_num;// numero de mesa
     private String token;
-    private String id_pedido;// id pedido
+    private String id_pedido,id_pedido2;// id pedido
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         //Variables para el número de mesa y el id pedido
         mes_num = "";
         id_pedido = "";
-
+        id_pedido2="";
         consultarMesas();
     }
 
@@ -121,8 +121,16 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                             }else if(status.equals("202")){
                                 //Estado mesa: Orden Iniciada
                                 JSONArray pedidoarray = response.getJSONArray("pedidos");
-                                JSONObject pedido = pedidoarray.getJSONObject(0);
+                                int index=0;
+                                for(int i =0;i<pedidoarray.length();i++){
+                                    index=i;
+                                }
+                                JSONObject pedido = pedidoarray.getJSONObject(index);
                                 id_pedido = pedido.getString("id");
+                                if(pedidoarray.length()>1) {
+                                    JSONObject pedido2 = pedidoarray.getJSONObject(index-1);
+                                    id_pedido2 = pedido2.getString("id");
+                                }
 
                                 siguienteActivity();
                             }else{
@@ -186,6 +194,7 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
         verificarorden.putExtra("id_emp", id_emp);
         verificarorden.putExtra("mes_num", mes_num);
         verificarorden.putExtra("id_pedido",id_pedido);
+        verificarorden.putExtra("id_pedido2",id_pedido2);
         verificarorden.putExtra("token", token);
         startActivity(verificarorden);
     }

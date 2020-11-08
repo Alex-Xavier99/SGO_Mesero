@@ -47,5 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Btn_SPEliminar" />
+
+        <Button
+            android:id="@+id/Btn_DividirCnta"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Btn_DividirCnta" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
