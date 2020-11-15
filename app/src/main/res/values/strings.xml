@@ -87,4 +87,8 @@
     #Cuadro de dialogo cantidad a facturar
     <string name="Txt_TitleOrdn">Verificar Orden de Cuenta</string>
 
+    #Cuadro de dialogo segunda cuenta
+    <string name="Txt_TitleCnta">Seleccionar una Cuenta</string>
+    <string name="Txt_OrdnFact">Ordenes Realizadas</string>
+
 </resources>

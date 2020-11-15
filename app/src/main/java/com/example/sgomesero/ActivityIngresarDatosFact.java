@@ -72,7 +72,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     }
 
     private void ingresarCliente(){
-        if(isValidarCampos()){
+        if(isValidarParametros()){
 
             String rzso = razonsocial.getText().toString();
             String cdla = cedula.getText().toString();
@@ -122,18 +122,94 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                         }
                     });
         }else{
-            Toast.makeText(this, "No se puede insertar un cliente si existen campos vacios", Toast.LENGTH_SHORT).show();
             loadingDialog.dismissDialog();
         }
     }
+    //Comprobar si el ingreso de datos es vacio y la cedula es correcta
+    private boolean isValidarParametros() {
+        String cedula1 = cedula.getText().toString().trim();
+        String ruc;
+        if (isValidarCampos())
+        {
+            if (cedula1.length() > 10) {
+                ruc = cedula1.substring(10);//Se separa el 001 del ruc para verficar si la cedula es valida
+                if (ruc.equals("001")) {//se comprueba si es un RUC
+                        cedula1 = cedula1.substring(0, 10);// se toma los 10 primeros digitos
+                        return validadorDeCedula(cedula1);
 
-    private boolean isValidarCampos(){
-        return !razonsocial.getText().toString().trim().isEmpty() &&
-                !cedula.getText().toString().trim().isEmpty() &&
-                !direccion.getText().toString().trim().isEmpty() &&
-                !telefono.getText().toString().trim().isEmpty() &&
-                !correo.getText().toString().trim().isEmpty();
+                } else {
+                    Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            } else if (cedula1.length() == 10) {//en el caso que solo sean 10 digitos
+                if(cedula1.equals("9999999999"))
+                    return true;
+                else
+                    return validadorDeCedula(cedula1);
+
+            } else {
+                Toast.makeText(this, "La cédula debe tener 10 dígitos y RUC 13", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+         }
+        else {
+            Toast.makeText(this, "No se puede insertar un cliente si existen campos vacios", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
     }
+    //Se comprueba si los campos estan vacios o no
+     private boolean isValidarCampos(){
+         return !razonsocial.getText().toString().trim().isEmpty() &&
+                 !cedula.getText().toString().trim().isEmpty() &&
+                 !direccion.getText().toString().trim().isEmpty() &&
+                 !telefono.getText().toString().trim().isEmpty() &&
+                 !correo.getText().toString().trim().isEmpty();
+     }
+     //Se comprueba si la cedula es valida
+    public boolean validadorDeCedula(String cedula) {
+        boolean cedulaCorrecta = false;
+        String ruc = "";
+        try {
+                int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+                if (tercerDigito < 6) {
+                    // Coeficientes de validación cédula
+                    // El decimo digito se lo considera dígito verificador
+                    int[] coefValCedula = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
+                    int verificador = Integer.parseInt(cedula.substring(9,10));
+                    int suma = 0;
+                    int digito = 0;
+                    for (int i = 0; i < (cedula.length() - 1); i++) {
+                        digito = Integer.parseInt(cedula.substring(i, i + 1))* coefValCedula[i];
+                        suma += ((digito % 10) + (digito / 10));
+                    }
+
+                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
+                        cedulaCorrecta = true;
+                    }
+                    else if ((10 - (suma % 10)) == verificador) {
+                        cedulaCorrecta = true;
+                    } else {
+                        cedulaCorrecta = false;
+                    }
+                } else {
+                    cedulaCorrecta = false;
+                }
+        } catch (NumberFormatException nfe) {
+            cedulaCorrecta = false;
+        } catch (Exception err) {
+
+            Toast.makeText(ActivityIngresarDatosFact.this, "Una excepcion ocurrio en el proceso de validadcion", Toast.LENGTH_LONG).show();
+            cedulaCorrecta = false;
+        }
+
+        if (!cedulaCorrecta) {
+            Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
+        }
+        return cedulaCorrecta;
+    }
+
     @Override // Recibe la cedula del cliente buscado
     public void ResultadoCuadroDialogo(String cedulacliente) {
         loadingDialog.startLoadingDialog();
@@ -193,7 +269,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     //Con el boton Facturar finalizamos la orden
     public void finalizarOrden(View view){
 
-       if(isValidarCampos()){
+       if(isValidarParametros()){
            loadingDialog.startLoadingDialog();
            generarFactura(id_emp, id_cliente);
        }

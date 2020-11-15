@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     private String token;
     private String id_pedido,id_pedido2;// id pedido
 
+
+    //Dialogo de carga
+    final LoadingDialog loadingDialog = new LoadingDialog(ActivitySeleccionMesa.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +102,9 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
     public void aceptar(View view){
         mes_num = spin.getSelectedItem().toString();//Selecciona el Item de objeto spinner
         mes_num = mes_num.substring(5).trim();
-
+        loadingDialog.startLoadingDialog();
         verificarEstadoMesa();
+
     }
 
     public void verificarEstadoMesa(){
@@ -121,30 +126,30 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                             }else if(status.equals("202")){
                                 //Estado mesa: Orden Iniciada
                                 JSONArray pedidoarray = response.getJSONArray("pedidos");
-                                int index=0;
-                                for(int i =0;i<pedidoarray.length();i++){
-                                    index=i;
+                                JSONObject pedido = pedidoarray.getJSONObject(0);
+                                id_pedido= pedido.getString("id");
+                                if(pedidoarray.length()>1){
+                                    id_pedido2=pedido.getString("id");
                                 }
-                                JSONObject pedido = pedidoarray.getJSONObject(index);
-                                id_pedido = pedido.getString("id");
-                                if(pedidoarray.length()>1) {
-                                    JSONObject pedido2 = pedidoarray.getJSONObject(index-1);
-                                    id_pedido2 = pedido2.getString("id");
-                                }
-
+                                else
+                                    id_pedido2="";
+                                loadingDialog.dismissDialog();
                                 siguienteActivity();
                             }else{
                                 Toast.makeText(ActivitySeleccionMesa.this, "No hay ninguna mesa disponible.", Toast.LENGTH_SHORT).show();
-                            }
-
+                                loadingDialog.dismissDialog();
+                           }
+                            loadingDialog.dismissDialog();
                         } catch (JSONException e) {
                             Toast.makeText(ActivitySeleccionMesa.this, "Error de la Solicitud: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Toast.makeText(ActivitySeleccionMesa.this, "Error de Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismissDialog();
                     }
                 });
     }
@@ -174,8 +179,8 @@ public class ActivitySeleccionMesa extends AppCompatActivity {
                             JSONObject data = response.getJSONObject("data");
                             id_pedido = data.getString("id");
                             Toast.makeText(ActivitySeleccionMesa.this, mensaje, Toast.LENGTH_SHORT).show();
-
                             siguienteActivity();
+
 
                         } catch (JSONException e) {
                             Toast.makeText(ActivitySeleccionMesa.this, "Error1: "+e.getMessage(), Toast.LENGTH_SHORT).show();

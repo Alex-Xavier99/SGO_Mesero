@@ -35,7 +35,7 @@ public class ActivityVerificarOrdenSegCuenta extends AppCompatActivity  {
     private String id_emp;
     private String mes_num;
     private String token;
-    Intent actv = new Intent(this, ActivityVerificarOrden.class);;
+
     //Context contexto;
     int posPlato;
     //Lista de menu
@@ -170,7 +170,7 @@ public class ActivityVerificarOrdenSegCuenta extends AppCompatActivity  {
             factura.putExtra("id_pedido", id_pedido2);
             factura.putExtra("id_emp", id_emp);
             factura.putExtra("token", token);
-            loadingDialog.startLoadingDialog();
+
             actualizarEstadoFact(id_pedido2);
             startActivity(factura);
             finish();
@@ -218,18 +218,18 @@ public class ActivityVerificarOrdenSegCuenta extends AppCompatActivity  {
 
                             String mensaje = response.getString("message");
                             Toast.makeText(ActivityVerificarOrdenSegCuenta.this, mensaje, Toast.LENGTH_SHORT).show();
-                            loadingDialog.dismissDialog();
+
 
                         } catch (JSONException e) {
                             Toast.makeText(ActivityVerificarOrdenSegCuenta.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            loadingDialog.dismissDialog();
+
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivityVerificarOrdenSegCuenta.this, "ErrorDet: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
-                        loadingDialog.dismissDialog();
+                        Toast.makeText(ActivityVerificarOrdenSegCuenta.this, "Error Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
