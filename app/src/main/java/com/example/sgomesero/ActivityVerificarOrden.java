@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,7 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityVerificarOrden extends AppCompatActivity implements DialogModificarPlato.FinalizarCuadroDialogo, DialogSelectPlato.FinalizarCuadroDialogo,DialogCantidadFact.FinalizarCuadroDialogo {
+public class ActivityVerificarOrden extends AppCompatActivity implements DialogModificarPlato.FinalizarCuadroDialogo, DialogSelectPlato.FinalizarCuadroDialogo,DialogCantidadFact.FinalizarCuadroDialogo,dialog_segunda_cuenta.FinalizarCuadroDialogo {
 
     private TextView subtitle;
     private ListView list_orden;
@@ -39,6 +40,11 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
     private  String id_pedido2;
     private  String id_Estado;
     private String token;
+    private String [][] arrayPedidos;
+
+    /*ArrayList<String> listId_pedido;
+    ArrayList<String> listId_fact;
+    ArrayList<String> list_cliente;*/
 
     //Lista de menu
     ArrayList<String> listIdPlts= new ArrayList<>();//Lista de valor platos
@@ -68,6 +74,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         id_pedido = getIntent().getStringExtra("id_pedido");
         id_pedido2 = getIntent().getStringExtra("id_pedido2");
         token = getIntent().getStringExtra("token");
+
         //Se pasa el parametro del numero de mesa
         subtitle.setText("Mesa " + mes_num);
 
@@ -75,6 +82,8 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         list_orden = (ListView)findViewById(R.id.listview_ordenes);
         res_total = (TextView)findViewById(R.id.txtview_totalres);
         loadingDialog.startLoadingDialog();
+
+        //verificarIdEstadoFact();
         buscarDetalle();
         seleccionarOpcionPlato();
 
@@ -136,6 +145,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
     public void datosFactura(View view){
 
         if(!menu[0][0].equals("")) {
+            actualizarEstadoFact(id_pedido);
             Intent factura = new Intent(this, ActivityIngresarDatosFact.class);
             factura.putExtra("id_pedido", id_pedido);
             factura.putExtra("id_emp", id_emp);
@@ -150,13 +160,22 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
 
     //Boton Ver activity verificar segunda orden
     public void verSegundaOrden(View view){
-        if(!id_pedido2.isEmpty()) {
-            IniciarActivitySegundaCnta();
+        new dialog_segunda_cuenta(contexto,ActivityVerificarOrden.this,token,mes_num,id_pedido);
+        /*if(!id_pedido2.isEmpty()) {
+            new dialog_segunda_cuenta(contexto,ActivityVerificarOrden.this,token,mes_num);
         }
         else
-            Toast.makeText(ActivityVerificarOrden.this, "No existe ordenes en la segunda cuenta", Toast.LENGTH_LONG).show();
+            Toast.makeText(ActivityVerificarOrden.this, "No existe ordenes en la segunda cuenta", Toast.LENGTH_LONG).show();*/
     }
+    @Override
+    public void ResultadoCuadroDialogSngdCuenta(String idpedido) {
+        if(!idpedido.equals("N")) {
+            id_pedido2 = idpedido;
+            IniciarActivitySegundaCnta();
+        } else
+            Toast.makeText(ActivityVerificarOrden.this, "No existe ordenes en la segunda cuenta", Toast.LENGTH_LONG).show();
 
+    }
     //Buscar en la BDD el datalle de acuerdo al pedido
     public void buscarDetalle(){
 
@@ -190,14 +209,14 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
                                         listpvpPlts.add(pvpPlato);//Lista precio
                                         listvalorPlts.add(valorPlato);//Lista total plato cantidad
                                     }
-
+                                    loadingDialog.dismissDialog();
                                     menuVacio(false);
                                 } else {
-                                    Toast.makeText(ActivityVerificarOrden.this, "No hay ningun plato disponible.", Toast.LENGTH_LONG).show();
-
+                                    Toast.makeText(ActivityVerificarOrden.this, "No hay ningun plato disponible.", Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismissDialog();
                                     menuVacio(true);
                                 }
-                                loadingDialog.dismissDialog();
+
                             } catch (JSONException e) {
                                 Toast.makeText(ActivityVerificarOrden.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 loadingDialog.dismissDialog();
@@ -206,7 +225,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
 
                         @Override
                         public void onError(ANError anError) {
-                            Toast.makeText(ActivityVerificarOrden.this, "Error: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityVerificarOrden.this, "Error Servidor: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                             loadingDialog.dismissDialog();
                         }
                     });
@@ -356,7 +375,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(ActivityVerificarOrden.this, "Error:   " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityVerificarOrden.this, "Error Servidor:   " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
                         loadingDialog.dismissDialog();
                     }
                 });
@@ -365,39 +384,40 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
     //Verificar si IdEstado Factura es diferente de 1 para crear otro pedido
     public void verificarIdEstadoFact(String id){
         if(!id.equals("")) {
-                 String url = "http://sgo-central-6to.herokuapp.com/api/pedidos/" + id;
-                AndroidNetworking.get(url)
-                        .addHeaders("Content-type", "application/json")
-                        .addHeaders("Authorization", token)
-                        .setPriority(Priority.MEDIUM)
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    String respuesta = response.getString("status");
-                                    if (respuesta.equals("202")) {
-                                        JSONObject datos = response.getJSONObject("data");
-                                        id_Estado = datos.getString("idEstado");
-                                        //Si el estado no es 1 se genera un nuevo pedido
-                                        if(!id_Estado.equals("1")) {
-                                            id_pedido2="";
-                                            generarNuevoPedido();
-                                        }
+            String url = "http://sgo-central-6to.herokuapp.com/api/pedidos/" + id;
+            AndroidNetworking.get(url)
+                    .addHeaders("Content-type", "application/json")
+                    .addHeaders("Authorization", token)
+                    .setPriority(Priority.MEDIUM)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String respuesta = response.getString("status");
+                                if (respuesta.equals("202")) {
+                                    JSONObject datos = response.getJSONObject("data");
+                                    id_Estado = datos.getString("idEstado");
+                                    //Si el estado no es 1 se genera un nuevo pedido
+                                    if(!id_Estado.equals("1")) {
+                                        id_pedido2="";
+                                        loadingDialog.dismissDialog();
+                                        generarNuevoPedido();
                                     }
-                                    loadingDialog.dismissDialog();
-                                } catch (JSONException e) {
-                                    Toast.makeText(ActivityVerificarOrden.this, "Error:1eSTADP " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    loadingDialog.dismissDialog();
                                 }
-                            }
-
-                            @Override
-                            public void onError(ANError anError) {
-                                Toast.makeText(ActivityVerificarOrden.this, "Error:2eSTADO " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                                loadingDialog.dismissDialog();
+                            } catch (JSONException e) {
+                                Toast.makeText(ActivityVerificarOrden.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 loadingDialog.dismissDialog();
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            Toast.makeText(ActivityVerificarOrden.this, "Error Servidor: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                            loadingDialog.dismissDialog();
+                        }
+                    });
         }
         else
         {
@@ -434,7 +454,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
 
                             loadingDialog.dismissDialog();
                         } catch (JSONException e) {
-                            Toast.makeText(ActivityVerificarOrden.this, "ErrorP1: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityVerificarOrden.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             loadingDialog.dismissDialog();
                         }
                     }
@@ -474,7 +494,7 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
                             loadingDialog.dismissDialog();
 
                         } catch (JSONException e) {
-                            Toast.makeText(ActivityVerificarOrden.this, "Error dTLL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityVerificarOrden.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             loadingDialog.dismissDialog();
                         }
                     }
@@ -487,7 +507,40 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
                 });
     }
 
+    public void actualizarEstadoFact(String pedido){
+        String url = "http://sgo-central-6to.herokuapp.com/api/pedidos/" + pedido;
+        Map<String,String> datos = new HashMap<>();
+        datos.put("idEstado","2");
+        JSONObject jsonData = new JSONObject(datos);
 
+        AndroidNetworking.patch(url)
+                .addHeaders("Content-type","application/json")
+                .addHeaders("Authorization",token)
+                .addJSONObjectBody(jsonData)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            String mensaje = response.getString("message");
+                            Toast.makeText(ActivityVerificarOrden.this, mensaje, Toast.LENGTH_SHORT).show();
+
+
+                        } catch (JSONException e) {
+                            Toast.makeText(ActivityVerificarOrden.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(ActivityVerificarOrden.this, "Error Servidor: "+anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
     public void VaciarListas(){
         //Se vacian las listas
         listIdDtall.clear();
@@ -510,4 +563,6 @@ public class ActivityVerificarOrden extends AppCompatActivity implements DialogM
         super.onRestart();
         VaciarListas();
     }
+
+
 }

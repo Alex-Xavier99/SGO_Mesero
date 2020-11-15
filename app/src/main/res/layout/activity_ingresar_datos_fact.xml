@@ -27,7 +27,7 @@
             android:ems="10"
             android:hint="@string/txt_identificacion"
             android:inputType="number"
-            android:maxLength="10"
+            android:maxLength="13"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
             android:textSize="20sp" />
