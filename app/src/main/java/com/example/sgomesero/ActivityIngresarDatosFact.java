@@ -134,8 +134,21 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
             if (cedula1.length() > 10) {
                 ruc = cedula1.substring(10);//Se separa el 001 del ruc para verficar si la cedula es valida
                 if (ruc.equals("001")) {//se comprueba si es un RUC
-                        cedula1 = cedula1.substring(0, 10);// se toma los 10 primeros digitos
-                        return validadorDeCedula(cedula1);
+                    cedula1 = cedula1.substring(0, 10);// se toma los 10 primeros digitos
+                    //return validadorDeCedula(cedula1);
+                    if(!validadorDeCedula(cedula1)) {
+                        if(!validacionRUCSociedades(cedula1)){
+                            if(!validaRucEPublicas(cedula1))
+                            {
+                                Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
+                                return false;
+                            }else
+                                return true;
+                        }else
+                            return true;
+                    }
+                    else
+                        return true;
 
                 } else {
                     Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
@@ -144,8 +157,23 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
             } else if (cedula1.length() == 10) {//en el caso que solo sean 10 digitos
                 if(cedula1.equals("9999999999"))
                     return true;
-                else
-                    return validadorDeCedula(cedula1);
+                else{
+                    //return validadorDeCedula(cedula1);
+                    if(!validadorDeCedula(cedula1)) {
+                        if(!validacionRUCSociedades(cedula1)){
+                            if(!validaRucEPublicas(cedula1))
+                            {
+                                Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
+                                return false;
+                            }else
+                                return true;
+                        }else
+                            return true;
+                    }
+                    else
+                        return true;
+                }
+
 
             } else {
                 Toast.makeText(this, "La cédula debe tener 10 dígitos y RUC 13", Toast.LENGTH_LONG).show();
@@ -169,7 +197,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
      }
      //Se comprueba si la cedula es valida
     public boolean validadorDeCedula(String cedula) {
-        boolean cedulaCorrecta = false;
+        boolean cedulaCorrecta;
         String ruc = "";
         try {
                 int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
@@ -179,7 +207,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
                     int[] coefValCedula = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
                     int verificador = Integer.parseInt(cedula.substring(9,10));
                     int suma = 0;
-                    int digito = 0;
+                    int digito;
                     for (int i = 0; i < (cedula.length() - 1); i++) {
                         digito = Integer.parseInt(cedula.substring(i, i + 1))* coefValCedula[i];
                         suma += ((digito % 10) + (digito / 10));
@@ -203,11 +231,91 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
             Toast.makeText(ActivityIngresarDatosFact.this, "Una excepcion ocurrio en el proceso de validadcion", Toast.LENGTH_LONG).show();
             cedulaCorrecta = false;
         }
-
-        if (!cedulaCorrecta) {
-            Toast.makeText(ActivityIngresarDatosFact.this, "El número de cédula no es correcto", Toast.LENGTH_LONG).show();
-        }
         return cedulaCorrecta;
+    }
+    //Validacion el RUC DE entidades Juridicas o extranjeras
+    public  Boolean validacionRUCSociedades(String ruc){
+        final int num_provincias = 24;
+        //public static String rucPrueba = “1790011674001″;
+        int[] coeficientes = {4,3,2,7,6,5,4,3,2};
+        int constante = 11;
+        int prov;
+//verifica que los dos primeros dígitos correspondan a un valor entre 1 y NUMERO_DE_PROVINCIAS
+        String dig = ruc.substring(0,2);
+        prov = Integer.parseInt(dig);
+        if (!((prov > 0) && (prov <= num_provincias))) {
+            return false;
+        }
+
+//verifica que el último dígito de la cédula sea válido
+        int[] d = new int[10];
+        int suma = 0;
+
+//Asignamos el string a un array
+        for (int i = 0; i < d.length; i++) {
+            d[i] = Integer.parseInt(ruc.charAt(i) + "");
+        }
+
+        for (int i=0; i< d.length - 1; i++) {
+            d[i] = d[i] * coeficientes[i];
+            suma += d[i];
+//System.out.println(“Vector d en ” + i + ” es ” + d[i]);
+        }
+
+        int aux, resp;
+
+        aux = suma % constante;
+        resp = constante - aux;
+
+        resp = (resp == 10) ? 0 : resp;
+
+        if (resp == d[9])
+            return true;
+        else
+            return false;
+    }
+    //Validar el RUC de empresas publicas
+    public  Boolean validaRucEPublicas(String ruc){
+        final int num_provincias = 24;
+        int prov = Integer.parseInt(ruc.substring(0, 2));
+        boolean val = false;
+
+        if (!((prov > 0) && (prov <= num_provincias))) {
+            return val;
+        }
+
+        Integer v1,v2,v3,v4,v5,v6,v7,v8,v9;
+        Integer sumatoria;
+        Integer modulo;
+        Integer digito;
+        Integer sustraendo;
+        int[] d = new int[ruc.length()];
+
+        for (int i = 0; i < d.length; i++) {
+            d[i] = Integer.parseInt(ruc.charAt(i) + "");
+        }
+
+        v1 = d[0]* 3;
+        v2 = d[1]* 2;
+        v3 = d[2]* 7;
+        v4 = d[3]* 6;
+        v5 = d[4]* 5;
+        v6 = d[5]* 4;
+        v7 = d[6]* 3;
+        v8 = d[7]* 2;
+        v9 = d[8];
+
+        sumatoria = v1+v2+v3+v4+v5+v6+v7+v8;
+        modulo = sumatoria % 11;
+        sustraendo = modulo * 11;
+        digito = 11-(sumatoria - sustraendo);
+
+
+        if(digito.equals(v9))
+            val = true;
+        else
+            val = false;
+        return val;
     }
 
     @Override // Recibe la cedula del cliente buscado
@@ -269,7 +377,7 @@ public class ActivityIngresarDatosFact extends AppCompatActivity implements Dial
     //Con el boton Facturar finalizamos la orden
     public void finalizarOrden(View view){
 
-       if(isValidarParametros()){
+       if(isValidarCampos()){
            loadingDialog.startLoadingDialog();
            generarFactura(id_emp, id_cliente);
        }

@@ -113,9 +113,9 @@ public class ActivityLogin extends AppCompatActivity {
         String token = "Bearer "+tkn;//Se concatena el token con Bearer para la autorizacion
         actSelMes.putExtra("id_emp", id_emp);
         actSelMes.putExtra("token", token);
+        loadingDialog.dismissDialog();
         startActivity(actSelMes);
         finish();
-        loadingDialog.dismissDialog();
     }
 
     public  void onBackPressed(){
